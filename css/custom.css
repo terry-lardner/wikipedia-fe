@@ -1,0 +1,434 @@
+/*
+	Border helpers 
+*/
+
+.off-canvas-wrapper {
+	/*border: 1px solid red;*/
+}
+
+
+.off-canvas-content {
+	/*border: 1px solid blue;*/
+}
+
+/*
+	Border helpers  end
+*/
+body {
+	font-family: 'Verdana';
+	font-size: 14px;
+	/*background-color: #FAFAFA;*/
+	background-color: #fff;
+}
+
+a {
+	padding: 0;
+	margin: 0;
+	outline: 0;
+	color: #203FAB;
+	-webkit-appearance: none;
+	transition: color 0.25s ease-out;
+}
+
+a:hover {
+	color: #12177D;
+	text-decoration: underline;
+}
+
+a:focus {
+	color: #12177D;
+}
+
+ul {
+	list-style: none;
+	margin: 0;
+	padding:0;
+}
+/*
+  ========================================
+  menu
+  ========================================
+*/
+/* Foundation classes */
+.off-canvas-wrapper {
+	border-bottom: 1px solid #E5E5E5;
+}
+
+
+.off-canvas {
+	height: 100%;
+}
+
+.off-canvas,
+.off-canvas-content {
+	box-shadow: none;
+	/*background-color: #FAFAFA;*/
+	background-color: #fff;
+}
+
+.off-canvas-content {
+	min-height: 800px;
+}
+
+/* Foundation classes end */
+
+.menu-btn-container {
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+.menu-btn {	
+	margin: 0;
+	padding: 0;
+	width: 23px;
+	height: 100%;
+	background-color: #015150;
+}
+
+.menu-btn:hover {
+	background-color: #028482;
+}
+
+.menu-btn:focus {
+	background-color: #015150;
+}
+
+.off-canvas-nav-title {
+	padding: 5px 5px 0 0;
+	font-size: 12px;
+	font-weight: bold;
+	color: #949494;
+	text-align: right;
+}
+
+.off-canvas-nav {
+	margin: 20px 0 0 0;
+}
+
+.off-canvas-nav ul {
+	padding: 1px;
+	border-bottom: 1px solid #E5E5E5;
+}
+
+.off-canvas-nav ul:last-child {
+	border-bottom:0;
+}
+
+.off-canvas-nav a {
+	margin: 0;
+	font-size: 11px;
+	/*text-transform: uppercase;*/
+	/*background-color: #FCFCFC;*/
+	background-color: #fff;
+	font-weight: bold;
+	width:100%;
+	text-align: left;
+	color: #242424;
+}
+
+.off-canvas-logo {
+	text-align: center;
+}
+.off-canvas-logo img {
+	width:240px;
+}
+
+.off-canvas-nav a:hover,
+.off-canvas-nav a:focus {
+	background-color: #242424;
+}
+
+
+/*
+  ========================================
+  content
+  ========================================
+*/
+.container {
+	margin: 0 7px 0 30px;
+}
+
+/*
+  ========================================
+  content - navbar
+  ========================================
+*/
+.logo {
+	width: 65px;
+	margin-top: -4px
+}
+
+.content-nav {
+	border-bottom: 1px solid #E5E5E5;
+}
+
+.content-nav li{
+	font-size: 12px;
+}
+
+.wiki-title,
+.logo-container,
+.search-form,
+.welcome-msg {
+	display: inline-block;
+}
+
+.wiki-title {
+	padding-top: 10px;
+	float: right;
+}
+
+.user-nav {
+	margin-bottom: 0.5em;
+}
+
+.user-status-online {
+	color: #000;
+	font-weight: bold;
+}
+
+.search-input {
+	padding: 4px 10px;
+	margin: 0;
+	width: auto;
+	border: 1px solid #D9D9D9;
+ 	height: 100%;
+ 	font-size: 13px; 	
+ 	border-radius: 15px;
+ 	box-shadow: none;
+ 	text-align: right;
+}
+
+.main-title {
+	padding:0;
+	margin:-7px 0 0 0;
+	text-align: right;
+	letter-spacing: 1px;
+}
+
+.main-subtitle {
+	font-size: 11px;
+	font-style: italic;
+	letter-spacing: 1px;
+}
+
+/*
+  ========================================
+  content - wiki-content
+  ========================================
+*/
+.row,
+.columns {
+	padding: 0;
+	margin: 0;
+}
+
+.drilldown-close {
+	font-weight: bold;
+}
+
+.custom-content {
+	margin-top: 50px;
+}
+
+.sister-projects {
+	position: absolute;
+	bottom: 0;
+    margin-left: -22px;
+    width: 100%;
+}
+
+.sister-projects li {
+	display: inline-block;
+	width: 33.33%;
+}
+
+
+.sister-projects a {
+	width: 100%;
+	color: #242424;
+	background-color: #F2F2F2;
+	padding: 10px 0;
+	margin: 0;
+
+}
+.sister-projects a:hover {
+	text-decoration: none;
+}
+
+.ss-commons:hover {
+	background-color: #d10000;
+}
+
+.ss-media:hover {
+	background-color: #ff6622;
+}
+
+.ss-meta:hover {
+	background-color: #ffda21;
+}
+
+.ss-books:hover {
+	background-color: #33dd00;
+}
+
+.ss-data:hover {
+	background-color: #1133cc;
+}
+
+.ss-news:hover {
+	background-color: #220066;
+}
+
+.ss-quote:hover {
+	background-color: #330044;
+}
+
+.ss-source:hover {
+	background-color: #d10000;
+}
+
+.ss-species:hover {
+	background-color: #ff6622;
+}
+
+.ss-versity:hover {
+	background-color: #ffda21;
+}
+
+.ss-voyage:hover {
+	background-color: #33dd00;
+}
+
+.ss-tionary:hover {
+	background-color: #1133cc;
+}
+
+
+.lang-item {
+	border:1px solid #E5E5E5;
+}
+
+.wiki-content {
+	background: -webkit-linear-gradient(to bottom, #FAFAFA, #fff);
+	background: -moz-linear-gradient(to bottom, #FAFAFA, #fff);
+	background: linear-gradient(to bottom, #FAFAFA, #fff);
+}
+
+.article-count {
+	width: 190px;
+	font-size: 12px;
+	text-align: center;
+	background-color: #fff;
+	border: 1px solid #E5E5E5;
+	float: right;
+}
+
+.article-count-num {
+	font-weight: bold;
+}
+
+.menu-language {
+	position: absolute;
+	font-size: 12px;
+	width: 115px;
+	padding: 0;
+	margin: 0;
+}
+
+.menu-language a:after,
+.js-drilldown-back:before {
+	display: none;
+}
+
+.menu-language ul {
+	margin: 0;
+	padding: 0;
+}
+.ss {
+	font-size: 14px;
+}
+.ss-superscript {
+	
+	font-family: 'Alice';
+	font-size: 11px;
+	vertical-align: super;
+}
+
+.ss-superscript:before {
+	content: 'Wiki';
+}
+
+/*
+  ========================================
+  policy
+  ========================================
+*/
+
+.policy {
+	padding: 20px 20px;
+	font-size: 11px;
+}
+
+.footer-links {
+	
+}
+
+.footer-links li {
+	display: inline-block;
+	padding: 15px 10px 0 0;
+}
+
+.footer-icons {
+	text-align: right;
+}
+
+.footer-icons li {
+		display: inline-block;
+		padding-left:5px;
+}
+
+
+
+
+/* media queries */
+@media screen and (max-width:39.9999em) {
+	.wiki-content {
+		padding: 10px 0 0 0;
+	}
+	.title-full {
+		display:none;
+	}
+	.search-input {
+		min-width: 200px;		
+	}
+	.sister-projects li {
+		width: 33.33%;	
+	}
+	.sister-projects {
+		margin-left: -7px;
+	}
+	.sister-projects a {
+		padding: 5px 0;
+	}
+
+}
+
+@media screen and (min-width:40em) {
+	.search-input {
+		min-width: 250px;		
+	}
+	.wiki-content {
+		padding: 15px;
+	}
+	.sister-projects li {
+		width: 16.66%;
+	}
+
+@media screen and (min-width:60em) {
+	.sister-projects li {
+	width: 8.33%;
+	}
+}
