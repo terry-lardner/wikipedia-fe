@@ -40,7 +40,7 @@ a:focus {
 }
 
 ul {
-	list-style: none;
+	/*list-style-type: none;*/
 	margin: 0;
 	padding:0;
 }
@@ -447,11 +447,11 @@ ul {
 	overflow: hidden;
 }
 
-.featured-carousel ul {
+#featCarousel {
 	width: 300%;
 }
 
-.featured-carousel li {
+.feat-inline {
 	display: inline-block;
 	width: 33.33%;
 	vertical-align: top;
@@ -459,6 +459,18 @@ ul {
 
 .feat-article article {
 	padding-top: 12px;
+}
+
+.article-sub-links {
+	text-align: right;
+}
+
+.article-sub-links li {
+	display: inline-block;
+}
+
+.feat-article-snippets  {
+	list-style-type: none;
 }
 
 /*
