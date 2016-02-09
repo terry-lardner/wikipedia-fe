@@ -44,6 +44,7 @@ ul {
 	margin: 0;
 	padding:0;
 }
+
 /*
   ========================================
   menu
@@ -119,8 +120,6 @@ ul {
 .off-canvas-nav a {
 	margin: 0;
 	font-size: 11px;
-	/*text-transform: uppercase;*/
-	/*background-color: #FCFCFC;*/
 	background-color: #fff;
 	font-weight: bold;
 	width:100%;
@@ -225,6 +224,10 @@ ul {
 	margin: 0;
 }
 
+.js-drilldown-back {
+	font-weight: bold;
+}
+
 .drilldown-close {
 	font-weight: bold;
 }
@@ -252,10 +255,8 @@ ul {
 	background-color: #F2F2F2;
 	padding: 10px 0;
 	margin: 0;
-
-}
-.sister-projects a:hover {
 	text-decoration: none;
+
 }
 
 .ss-commons:hover {
@@ -312,14 +313,12 @@ ul {
 }
 
 .wiki-content {
-	background: -webkit-linear-gradient(to bottom, #FAFAFA, #fff);
-	background: -moz-linear-gradient(to bottom, #FAFAFA, #fff);
-	background: linear-gradient(to bottom, #FAFAFA, #fff);
+	background: -webkit-linear-gradient(to bottom, #F2F2F2, #fff);
+	background: -moz-linear-gradient(to bottom, #F2F2F2, #fff);
+	background: linear-gradient(to bottom, #F2F2F2, #fff);
 }
 
 .article-count {
-	width: 190px;
-	font-size: 12px;
 	text-align: center;
 	background-color: #fff;
 	border: 1px solid #E5E5E5;
@@ -336,6 +335,7 @@ ul {
 	width: 115px;
 	padding: 0;
 	margin: 0;
+	z-index: 0;
 }
 
 .menu-language a:after,
@@ -360,6 +360,110 @@ ul {
 .ss-superscript:before {
 	content: 'Wiki';
 }
+
+/*
+  ========================================
+  content - featured-content
+  ========================================
+*/
+.featured-container {
+	border: 1px solid #E8E8E8;
+	border-radius: 0 0 15px 15px;
+	margin: 0 auto;
+	background-color: #fff;
+	padding-bottom: 10px;
+}
+
+.featured-nav,
+.featured-nav a,
+.featured-nav-dot a {
+	padding: 0;
+	margin: 0;
+}
+
+.featured-nav-dot {
+	text-align: center;
+}
+
+.featured-nav-dot li {
+	padding: 3px 7px;
+}
+
+.feat-lnk {
+	color: #242424; 
+	background-color: #FAFAFA;
+	text-transform: uppercase;
+	width: 100%;
+}
+
+.feat-lnk:hover {
+	color: #FAFAFA;
+	background-color: #242424;
+	text-decoration: none;
+}
+
+.feat-lnk:focus {
+	color: #FAFAFA; 
+	background-color: #242424;
+}
+
+.feat-dot {
+	width: 15px;
+	height: 15px;
+	border-radius: 15px;
+	background-color: #B0B0B0;
+	padding: 0;
+	margin: 0;
+}
+
+.feat-dot:hover,
+.feat-dot:focus {
+	text-decoration: none;
+	background-color: #242424;
+}
+
+
+.feat-btn-active {
+	color: #FAFAFA;
+	background-color: #242424;
+}
+
+.feat-dot-active {
+	color: #242424;
+}
+
+.featured-nav li,
+.featured-nav-dot li {
+	display: inline-block;	
+}
+
+.featured-nav li {
+	width: 33.33%;
+}
+
+
+.featured-carousel {
+	overflow: hidden;
+	height: 500px;
+}
+
+.featured-carousel ul {
+	width: 300%;
+}
+
+.featured-carousel li {
+	display: inline-block;
+	width: 33.33%;
+	height: 50px;
+}
+.row {
+	width: 100%;
+	border: 1px solid;
+}
+.image-prev {
+
+}
+
 
 /*
   ========================================
@@ -391,8 +495,6 @@ ul {
 }
 
 
-
-
 /* media queries */
 @media screen and (max-width:39.9999em) {
 	.wiki-content {
@@ -413,12 +515,22 @@ ul {
 	.sister-projects a {
 		padding: 5px 0;
 	}
+	.article-count {
+		font-size: 10px;
+		width: 160px;
+	}
+	.featured-nav {
+		display: none;
+	}
 
+	.featured-container {
+		width: 95%;
+	}
 }
 
 @media screen and (min-width:40em) {
 	.search-input {
-		min-width: 250px;		
+		min-width: 240px;		
 	}
 	.wiki-content {
 		padding: 15px;
@@ -427,8 +539,44 @@ ul {
 		width: 16.66%;
 	}
 
+	.article-count {
+		font-size: 11px;
+		width: 180px;
+	}
+
+	.featured-nav a {
+		padding: 5px 3px;
+		font-size: 12px;
+	}
+
+	.featured-nav-dot {
+		display: none;
+	}
+
+	.featured-container {
+		width: 85%;
+	}
+
 @media screen and (min-width:60em) {
+	.search-input {
+		min-width: 450px;		
+	}
+
 	.sister-projects li {
 	width: 8.33%;
+	}
+
+	.article-count {
+		font-size: 11px;
+		width: 180px;
+	}
+
+	.featured-nav a {
+		padding: 10px 8px;
+		font-size: 14px;
+	}
+
+	.featured-nav-dot {
+		display: none;
 	}
 }
