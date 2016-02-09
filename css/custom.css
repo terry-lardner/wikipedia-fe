@@ -233,7 +233,7 @@ ul {
 }
 
 .custom-content {
-	margin-top: 50px;
+	margin: 30px 0;
 }
 
 .sister-projects {
@@ -369,9 +369,10 @@ ul {
 .featured-container {
 	border: 1px solid #E8E8E8;
 	border-radius: 0 0 15px 15px;
-	margin: 0 auto;
 	background-color: #fff;
 	padding-bottom: 10px;
+	margin-bottom: 130px;
+
 }
 
 .featured-nav,
@@ -444,7 +445,6 @@ ul {
 
 .featured-carousel {
 	overflow: hidden;
-	height: 500px;
 }
 
 .featured-carousel ul {
@@ -454,15 +454,18 @@ ul {
 .featured-carousel li {
 	display: inline-block;
 	width: 33.33%;
-	height: 50px;
+	vertical-align: top;
 }
-.row {
-	width: 100%;
-	border: 1px solid;
-}
-.image-prev {
 
+.feat-article article {
+	padding-top: 12px;
 }
+
+/*
+  ========================================
+  content - news
+  ========================================
+*/
 
 
 /*
@@ -524,7 +527,7 @@ ul {
 	}
 
 	.featured-container {
-		width: 95%;
+		/*width: 95%;*/
 	}
 }
 
@@ -554,7 +557,7 @@ ul {
 	}
 
 	.featured-container {
-		width: 85%;
+		/*width: 85%;*/
 	}
 
 @media screen and (min-width:60em) {

@@ -13,7 +13,7 @@
 	const $carouselContainer = $('#carouselContainer');	
 	const $featCarousel = $carouselContainer.find('#featCarousel');		
 
-	const animSpeed = 800;
+	const animSpeed = 600;
 
 	const lnkFeatArticlePos = 1;
 	const lnkFeatNewsPos = 2;
