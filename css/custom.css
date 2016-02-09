@@ -40,7 +40,7 @@ a:focus {
 }
 
 ul {
-	/*list-style-type: none;*/
+	list-style-type: none;
 	margin: 0;
 	padding:0;
 }
@@ -537,10 +537,6 @@ ul {
 	.featured-nav {
 		display: none;
 	}
-
-	.featured-container {
-		/*width: 95%;*/
-	}
 }
 
 @media screen and (min-width:40em) {
@@ -566,10 +562,6 @@ ul {
 
 	.featured-nav-dot {
 		display: none;
-	}
-
-	.featured-container {
-		/*width: 85%;*/
 	}
 
 @media screen and (min-width:60em) {
