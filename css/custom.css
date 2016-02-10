@@ -174,6 +174,11 @@ ul {
 	display: inline-block;
 }
 
+.main-title,
+.main-subtitle {
+	font-family: "Times New Roman";
+}
+
 .wiki-title {
 	padding-top: 10px;
 	float: right;
@@ -208,7 +213,7 @@ ul {
 }
 
 .main-subtitle {
-	font-size: 11px;
+	font-size: 13px;
 	font-style: italic;
 	letter-spacing: 1px;
 }
