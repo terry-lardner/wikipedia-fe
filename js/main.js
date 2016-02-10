@@ -13,7 +13,11 @@
 	const $carouselContainer = $('#carouselContainer');	
 	const $featCarousel = $carouselContainer.find('#featCarousel');		
 
-	const animSpeed = 600;
+	const $viewArticle = $carouselContainer.find('#viewArticle');
+	const $viewNews = $carouselContainer.find('#viewNews');
+	const $viewList = $carouselContainer.find('#viewList');
+
+	const animSpeed = 800;
 
 	const lnkFeatArticlePos = 1;
 	const lnkFeatNewsPos = 2;
@@ -28,14 +32,19 @@
 	//Currently active buttons relative to carousel position
 	let currentActiveGrp = [$lnkFeatArticle, $dotFeatArticle];
 
+	//Hide non-default viewports
+	$viewNews.hide();
+	$viewList.hide();
+
 	//Custom Foundation drilldown menu
+	/*
 	const $customDrilldown = $('.menu-lang');
 	let options = {
 		closeOnClick: true
 	};
 
 	let customDrilldown = new Foundation.Drilldown($customDrilldown, options);
-
+	*/
 
 	//Calculate current position of carousel and slide to correct position.
 	function doSlide(pos) {
@@ -50,7 +59,6 @@
 			return;
 		}
 
-
 		//Set correct width syntax to pass to animate function.
 		if (distToTravel < 0) {
 			distToTravel =  distToTravel * -1;
@@ -62,31 +70,47 @@
 		console.log(`travelling by : ${distToTravel}%`);
 		console.log(`------------------`);
 
-		//Set new position and active button.
-		$featCarousel.animate(
-			{'margin-left':distToTravel},
-			animSpeed);
-
 		currentPos = pos;
 		setActive();
 
-		
+		//Set new position and active button.
+		/* Low performance */
+		/*
+		$featCarousel.animate(
+			{'margin-left':distToTravel},
+			animSpeed);
+		*/
+		/* Alternative transition */
+		// $featCarousel.css({'margin-left':distToTravel});			
 	}
 
 	function setActive() {
-		for (let i=0; i<currentActiveGrp.length; i++) {
+		let length = currentActiveGrp.length;
+
+		for (let i=0; i<length; i++) {
 			currentActiveGrp[i].removeClass('feat-btn-active');
 		};
 
 		if (currentPos === 1) {
-			currentActiveGrp = [$lnkFeatArticle, $dotFeatArticle];			
+			currentActiveGrp = [$lnkFeatArticle, $dotFeatArticle];
+			$viewArticle.show();
+			$viewNews.hide();
+			$viewList.hide();
+
 		} else if (currentPos === 2) {
-			currentActiveGrp = [$lnkFeatNews, $dotFeatNews];			
+			currentActiveGrp = [$lnkFeatNews, $dotFeatNews];
+			$viewNews.show();
+			$viewArticle.hide();
+			$viewList.hide();
+
 		} else if (currentPos === 3) {
 			currentActiveGrp = [$lnkFeatList, $dotFeatList];
+			$viewList.show();
+			$viewArticle.hide();
+			$viewNews.hide();
 		}
 
-		for (let i=0; i<currentActiveGrp.length; i++) {
+		for (let i=0; i<length; i++) {
 			currentActiveGrp[i].addClass('feat-btn-active');
 		};
 	}	
