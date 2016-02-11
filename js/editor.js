@@ -2,7 +2,7 @@
 
 (function() {
 
-	const $btnEdit = $('#btnEdit'),
+	var $btnEdit = $('#btnEdit'),
 	$contentContainer = $('#contentContainer'),
 	$contentViewport = $('#contentContainer').find('#contentViewport'),
 	$inputContainer = $('#inputContainer'),
@@ -11,21 +11,21 @@
 	$btnCancel = $('#inputContainer').find('#btnCancel'),
 	$formMsg = $('#inputContainer').find('#formMsg');
 
-	const illegal = ['style', 'html', 'body', 'script'];
+	var illegal = ['style', 'html', 'body', 'script'];
 
-	let illegalItem,
+	var illegalItem,
 	errorState; //0: no error, 1:empty html form, 2:general tag error
 
-	let networkAvailable = 0; // 0: no connection to Server, 1: Server is available
+	var networkAvailable = 0; // 0: no connection to Server, 1: Server is available
 
 	//For Test data
-	const $testDiv = $contentContainer.find('.testDiv'),
+	var $testDiv = $contentContainer.find('.testDiv'),
 	$networkStatus =  $contentContainer.find('#networkStatus'),
 	$btnTestData = $contentContainer.find('#btnTestData');
 
 	function checkAvailability() {
 		$networkStatus.removeClass();
-		$networkStatus.html('*CHECKING NETWORK....*')
+		$networkStatus.html('*....*');
 		$.ajax({
 		type: 'GET',
 		url: 'http://localhost:3000/',
@@ -78,7 +78,7 @@
 		removeStatusMsg();
 
 		if (arr.length > 1) {
-			for (let i=0; i<arr.length; i++) {
+			for (var i=0; i<arr.length; i++) {
 				arr[i].hide();
 			}
 		} else {
@@ -90,7 +90,7 @@
 		removeStatusMsg();
 
 		if (arr.length > 1) {
-			for (let i=0; i<arr.length; i++) {
+			for (var i=0; i<arr.length; i++) {
 				arr[i].show();
 			}
 		} else {
@@ -101,10 +101,10 @@
 	$("textarea").on('keydown', function(e) {
 	    if(e.keyCode === 9) { // tab was pressed
 	        // get caret position/selection
-	        let start = this.selectionStart,
+	        var start = this.selectionStart,
 	        end = this.selectionEnd;
 
-	        let $this = $(this),
+	        var $this = $(this),
 	        value = $this.val();
 
 	        // set textarea value to: text before caret + tab + text after caret
@@ -120,8 +120,8 @@
 	    }
 	});
 
-	$btnEdit.on('click', () => {
-		let content = $contentViewport.html();
+	$btnEdit.on('click', function() {
+		var content = $contentViewport.html();
 
 		hideElements([$contentViewport]);
 		showElements([$btnTestData, $inputContainer]);
@@ -129,11 +129,11 @@
 		$txtUserHTML.val(convertToWYS(content));
 	});
 
-	$btnSave.on('click', () => {
-	  let illegalPrefix = '<',
+	$btnSave.on('click', function() {
+	  var illegalPrefix = '<',
 	  html = $txtUserHTML.val();
 
-	  for (let i=0; i<illegal.length; i++) {    
+	  for (var i=0; i<illegal.length; i++) {    
 	    illegalItem = illegal[i];
 
 	    //Error cases
@@ -165,7 +165,7 @@
 	});
 
 	//Input test data
-	$btnTestData.on('click', () => {
+	$btnTestData.on('click', function() {
 		var client = new XMLHttpRequest();
 		client.open('GET', './test.html');
 		client.onreadystatechange = function() {

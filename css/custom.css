@@ -28,6 +28,10 @@ a {
 	color: #203FAB;
 	-webkit-appearance: none;
 	transition: color 0.25s ease-out;
+	-webkit-transition: color 0.25s ease-out;
+	-moz-transition: color 0.25s ease-out;
+	-o-transition: color 0.25s ease-out;
+	-ms-transition: color 0.25s ease-out;
 }
 
 a:hover {
@@ -250,8 +254,6 @@ ul {
 
 .sister-projects li {
 	display: inline-block;
-	/*width: 100%;*/
-	/*border: 1px solid red;*/
 }
 
 .sister-projects a {
@@ -261,7 +263,6 @@ ul {
 	padding: 10px 0;
 	margin: 0;
 	text-decoration: none;
-
 }
 
 .ss-commons {
@@ -322,8 +323,10 @@ ul {
 }
 
 .wiki-content {
+	background: #FAFAFA;
 	background: -webkit-linear-gradient(to bottom, #F2F2F2, #fff);
 	background: -moz-linear-gradient(to bottom, #F2F2F2, #fff);
+  	background: -o-linear-gradient(to bottom, #F2F2F2, #fff);
 	background: linear-gradient(to bottom, #F2F2F2, #fff);
 }
 

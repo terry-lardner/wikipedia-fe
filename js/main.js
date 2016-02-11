@@ -2,7 +2,7 @@
 
 (function() {
 
-	const $featNavContainer = $('#featNavContainer'),
+	var $featNavContainer = $('#featNavContainer'),
 	$lnkFeatArticle = $featNavContainer.find('#lnk-feat-article'),
 	$lnkFeatNews = $featNavContainer.find('#lnk-feat-news'),
 	$lnkFeatList = $featNavContainer.find('#lnk-feat-list'),
@@ -10,47 +10,47 @@
 	$dotFeatNews = $featNavContainer.find('#dot-feat-news'),
 	$dotFeatList = $featNavContainer.find('#dot-feat-list');
 
-	const $carouselContainer = $('#carouselContainer'),
+	var $carouselContainer = $('#carouselContainer'),
 	$featCarousel = $carouselContainer.find('#featCarousel');		
 
-	const $viewArticle = $carouselContainer.find('#viewArticle'),
+	var $viewArticle = $carouselContainer.find('#viewArticle'),
 	$viewNews = $carouselContainer.find('#viewNews'),
 	$viewList = $carouselContainer.find('#viewList'),
 	viewPortArr = [$viewArticle, $viewNews, $viewList],
 	viewPortArrLength = viewPortArr.length;
 
-	const lnkFeatArticlePos = $lnkFeatArticle.data('pos'),
+	var lnkFeatArticlePos = $lnkFeatArticle.data('pos'),
 	lnkFeatNewsPos = $lnkFeatNews.data('pos'),
 	lnkFeatListPos = $lnkFeatList.data('pos');
 
-	const dotFeatArticlePos =  $dotFeatArticle.data('pos'),
+	var dotFeatArticlePos =  $dotFeatArticle.data('pos'),
 	dotFeatNewsPos = $dotFeatNews.data('pos'),
 	dotFeatListPos = $dotFeatList.data('pos');
 
-	const animSpeed = 800;
+	var animSpeed = 800;
 	//Current position of the carousel
-	let currentPos = 1;
+	var currentPos = 1;
 	//Currently active buttons relative to carousel position
-	let activeGrp = [$lnkFeatArticle, $dotFeatArticle],
+	var activeGrp = [$lnkFeatArticle, $dotFeatArticle],
 	activeGrpLength = activeGrp.length;
 	//Custom Foundation drilldown menu
 	/*
-	const $customDrilldown = $('.menu-lang');
-	let options = {
+	var $customDrilldown = $('.menu-lang');
+	var options = {
 		closeOnClick: true
 	};
 
-	let customDrilldown = new Foundation.Drilldown($customDrilldown, options);
+	var customDrilldown = new Foundation.Drilldown($customDrilldown, options);
 	*/
 
 	//Calculate current position of carousel and slide to correct position.
 	function doSlide(e) {
 
-		let newPos = e.data.pos,
+		var newPos = e.data.pos,
 		distToTravel = (currentPos - newPos)*100;
 
-		console.log(`travelling ${currentPos} => ${newPos}`);
-		console.log(`distToTravel ${distToTravel}%`);
+		console.log('travelling ' + currentPos + ' => ' + newPos);
+		console.log('distToTravel ' + distToTravel + '%');
 
 		//Do nothing if we are in the currently active tab.
 		if (distToTravel === 0) {
@@ -59,7 +59,7 @@
 		}
 
 		//Remove 'active' class from buttons
-		for (let i=0; i<activeGrpLength; i++) {
+		for (var i=0; i<activeGrpLength; i++) {
 			activeGrp[i].removeClass('feat-btn-active');
 		};
 
@@ -71,13 +71,13 @@
 		//Set correct width syntax to pass to animate function.
 		if (distToTravel < 0) {
 			distToTravel =  distToTravel * -1;
-			distToTravel = `-=${distToTravel}%`;
+			distToTravel = '-=${distToTravel}%';
 		} else {
-			distToTravel = `+=${distToTravel}%`;
+			distToTravel = '+=${distToTravel}%';
 		}
 
-		console.log(`travelling by : ${distToTravel}%`);
-		console.log(`------------------`);
+		console.log('travelling by : ${distToTravel}%');
+		console.log('------------------');
 
 		$featCarousel.animate(
 			{'margin-left':distToTravel},
@@ -91,7 +91,7 @@
 		currentPos = newPos;
 		
 		//Hide all panels
-		for (let i=0; i<viewPortArrLength; i++) {
+		for (var i=0; i<viewPortArrLength; i++) {
 			viewPortArr[i].hide();
 		}
 
@@ -111,7 +111,7 @@
 	}
 
 	function setActive(activeGrp) {
-		for (let i=0; i<activeGrpLength; i++) {
+		for (var i=0; i<activeGrpLength; i++) {
 			activeGrp[i].addClass('feat-btn-active');
 		};
 	}
