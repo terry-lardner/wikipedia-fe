@@ -28,7 +28,7 @@
 		$networkStatus.html('*CHECKING NETWORK....*')
 		$.ajax({
 		type: 'GET',
-		url: 'http://localhost:5002/',
+		url: 'http://localhost:3000/',
 		success: function() {
 			networkAvailable = 1;
 			$networkStatus.addClass('networkStatusOK');
@@ -166,8 +166,8 @@
 
 	//Input test data
 	$btnTestData.on('click', () => {
-		let client = new XMLHttpRequest();
-		client.open('GET', '/test.html');
+		var client = new XMLHttpRequest();
+		client.open('GET', './test.html');
 		client.onreadystatechange = function() {
 		  $txtUserHTML.val(client.responseText);
 		}
