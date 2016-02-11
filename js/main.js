@@ -15,8 +15,9 @@
 
 	const $viewArticle = $carouselContainer.find('#viewArticle'),
 	$viewNews = $carouselContainer.find('#viewNews'),
-	$viewList = $carouselContainer.find('#viewList');
-
+	$viewList = $carouselContainer.find('#viewList'),
+	viewPortArr = [$viewArticle, $viewNews, $viewList],
+	viewPortArrLength = viewPortArr.length;
 
 	const lnkFeatArticlePos = $lnkFeatArticle.data('pos'),
 	lnkFeatNewsPos = $lnkFeatNews.data('pos'),
@@ -30,12 +31,8 @@
 	//Current position of the carousel
 	let currentPos = 1;
 	//Currently active buttons relative to carousel position
-	let currentActiveGrp = [$lnkFeatArticle, $dotFeatArticle];
-
-	//Hide non-default viewports
-	$viewNews.hide();
-	$viewList.hide();
-
+	let activeGrp = [$lnkFeatArticle, $dotFeatArticle],
+	activeGrpLength = activeGrp.length;
 	//Custom Foundation drilldown menu
 	/*
 	const $customDrilldown = $('.menu-lang');
@@ -47,18 +44,30 @@
 	*/
 
 	//Calculate current position of carousel and slide to correct position.
-	function doSlide(pos) {
+	function doSlide(e) {
 
-		let distToTravel = (currentPos - pos)*100;
+		let newPos = e.data.pos,
+		distToTravel = (currentPos - newPos)*100;
 
-		console.log(`travelling to pos : ${pos}`);
-		console.log(`distToTravel = ${distToTravel}%`);
+		console.log(`travelling ${currentPos} => ${newPos}`);
+		console.log(`distToTravel ${distToTravel}%`);
 
-		//No need to travel.
+		//Do nothing if we are in the currently active tab.
 		if (distToTravel === 0) {
+			console.log('Nothing to do.')
 			return;
 		}
 
+		//Remove 'active' class from buttons
+		for (let i=0; i<activeGrpLength; i++) {
+			activeGrp[i].removeClass('feat-btn-active');
+		};
+
+
+		//Show intended panel
+		//Below are three ways to do this :
+		// METHOD 1: jQuery animate. Low performance.
+		/*
 		//Set correct width syntax to pass to animate function.
 		if (distToTravel < 0) {
 			distToTravel =  distToTravel * -1;
@@ -70,77 +79,55 @@
 		console.log(`travelling by : ${distToTravel}%`);
 		console.log(`------------------`);
 
-		currentPos = pos;
-		setActive();
-
-		//Set new position and active button.
-		/* Low performance */
-		/*
 		$featCarousel.animate(
 			{'margin-left':distToTravel},
 			animSpeed);
 		*/
-		/* Alternative transition */
-		// $featCarousel.css({'margin-left':distToTravel});			
-	}
+		// METHOD 2: CSS Rule.
+		// $featCarousel.css({'margin-left':distToTravel});
 
-	function setActive() {
-		let length = currentActiveGrp.length;
-
-		for (let i=0; i<length; i++) {
-			currentActiveGrp[i].removeClass('feat-btn-active');
-		};
-
-		if (currentPos === 1) {
-			currentActiveGrp = [$lnkFeatArticle, $dotFeatArticle];
-			$viewArticle.show();
-			//TODO :Create and pass object of elements to hide
-			$viewNews.hide();
-			$viewList.hide();
-
-		} else if (currentPos === 2) {
-			currentActiveGrp = [$lnkFeatNews, $dotFeatNews];
-			$viewNews.show();
-			$viewArticle.hide();
-			$viewList.hide();
-
-		} else if (currentPos === 3) {
-			currentActiveGrp = [$lnkFeatList, $dotFeatList];
-			$viewList.show();
-			$viewArticle.hide();
-			$viewNews.hide();
+		// METHOD 3: Showing / Hiding panels.
+		//TODO :Create and pass object of elements to hide
+		currentPos = newPos;
+		
+		//Hide all panels
+		for (let i=0; i<viewPortArrLength; i++) {
+			viewPortArr[i].hide();
 		}
 
-		for (let i=0; i<length; i++) {
-			currentActiveGrp[i].addClass('feat-btn-active');
+		if (currentPos === 1) {
+			activeGrp = [$lnkFeatArticle, $dotFeatArticle];
+			$viewArticle.show();
+
+		} else if (currentPos === 2) {
+			activeGrp = [$lnkFeatNews, $dotFeatNews];
+			$viewNews.show();
+		} else if (currentPos === 3) {
+			activeGrp = [$lnkFeatList, $dotFeatList];
+			$viewList.show();
+		}
+		
+		setActive(activeGrp);
+	}
+
+	function setActive(activeGrp) {
+		for (let i=0; i<activeGrpLength; i++) {
+			activeGrp[i].addClass('feat-btn-active');
 		};
-	}	
+	}
+
+	//Optional: Hide out-of-sight panels on page load
+	$viewNews.hide();
+	$viewList.hide();	
 	
-	/* Carousel */
+	/* Carousel Event listeners*/
 	// Links
-	$lnkFeatArticle.on('click', () => {
-		doSlide(lnkFeatArticlePos);
-	});
-
-	$lnkFeatNews.on('click', () => {
-		doSlide(lnkFeatNewsPos);
-	});
-
-	$lnkFeatList.on('click', () => {
-		doSlide(lnkFeatListPos);
-	});
+	$lnkFeatArticle.on('click', {pos:lnkFeatArticlePos}, doSlide);
+	$lnkFeatNews.on('click', {pos:lnkFeatNewsPos}, doSlide);
+	$lnkFeatList.on('click', {pos:lnkFeatListPos}, doSlide);
 
 	// Dots
-	$dotFeatArticle.on('click', () => {
-		doSlide(dotFeatArticlePos);
-	});
-
-	$dotFeatNews.on('click', () => {
-		doSlide(dotFeatNewsPos);
-	});
-
-	$dotFeatList.on('click', () => {
-		doSlide(dotFeatListPos);
-	});
-
+	$dotFeatArticle.on('click', {pos:dotFeatArticlePos}, doSlide);
+	$dotFeatNews.on('click', {pos:dotFeatNewsPos}, doSlide);
+	$dotFeatList.on('click', {pos:dotFeatListPos}, doSlide);
 }());
