@@ -451,11 +451,11 @@ ul {
 }
 
 
-.featured-carousel {
+.carousel-container {
 	overflow: hidden;
 }
 
-.feat-carousel {
+.carousel {
 	width: 300%;
 }
 
@@ -483,6 +483,18 @@ ul {
 
 .feat-article-snippets  {
 	list-style-type: none;
+}
+
+/* carousel html tag overrides */
+.carousel h1,
+.carousel h2,
+.carousel h3,
+.carousel h4,
+.carousel h5 {
+	border-bottom: 1px solid #A6A3A4;
+	padding: 0;
+	margin: 0;
+	line-height: 1;
 }
 
 
@@ -529,16 +541,34 @@ ul {
   article pages - html tag overrides
   ========================================
 */
-.contentContainer h1,
-.contentContainer h2,
-.contentContainer h3,
-.contentContainer h4,
-.contentContainer h5 {
+.contentViewport h1,
+.contentViewport h2,
+.contentViewport h3,
+.contentViewport h4,
+.contentViewport h5 {
 	border-bottom: 1px solid #A6A3A4;
 	padding: 0;
 	margin: 0;
 	line-height: 1;
+	font-family: "Times New Roman";
 }
+
+.contentViewport .image {
+	width: 225px;
+	float: left;
+	font-size: 11px;
+	font-style:italic;
+	padding: 4px;
+	margin: 15px 15px 0 0;
+	border: 1px solid #D9D5D6;
+	background-color: #F5F5F5;
+}
+
+.contentViewport .image:after {
+	display: block;
+}
+
+
 
 /*
   ========================================
@@ -669,4 +699,17 @@ ul {
 	.featured-nav-dot {
 		display: none;
 	}
+}
+
+.testDiv {
+	margin-top:10px;
+	font-size: 11px;
+}
+
+.networkStatusNOK {
+	color: red;
+}
+
+.networkStatusOK {
+	color: green;
 }

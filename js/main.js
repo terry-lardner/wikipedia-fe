@@ -2,31 +2,31 @@
 
 (function() {
 
-	const $featNavContainer = $('#featNavContainer');
-	const $lnkFeatArticle = $featNavContainer.find('#lnk-feat-article');
-	const $lnkFeatNews = $featNavContainer.find('#lnk-feat-news');
-	const $lnkFeatList = $featNavContainer.find('#lnk-feat-list');
-	const $dotFeatArticle = $featNavContainer.find('#dot-feat-article');
-	const $dotFeatNews = $featNavContainer.find('#dot-feat-news');
-	const $dotFeatList = $featNavContainer.find('#dot-feat-list');
+	const $featNavContainer = $('#featNavContainer'),
+	$lnkFeatArticle = $featNavContainer.find('#lnk-feat-article'),
+	$lnkFeatNews = $featNavContainer.find('#lnk-feat-news'),
+	$lnkFeatList = $featNavContainer.find('#lnk-feat-list'),
+	$dotFeatArticle = $featNavContainer.find('#dot-feat-article'),
+	$dotFeatNews = $featNavContainer.find('#dot-feat-news'),
+	$dotFeatList = $featNavContainer.find('#dot-feat-list');
 
-	const $carouselContainer = $('#carouselContainer');	
-	const $featCarousel = $carouselContainer.find('#featCarousel');		
+	const $carouselContainer = $('#carouselContainer'),
+	$featCarousel = $carouselContainer.find('#featCarousel');		
 
-	const $viewArticle = $carouselContainer.find('#viewArticle');
-	const $viewNews = $carouselContainer.find('#viewNews');
-	const $viewList = $carouselContainer.find('#viewList');
+	const $viewArticle = $carouselContainer.find('#viewArticle'),
+	$viewNews = $carouselContainer.find('#viewNews'),
+	$viewList = $carouselContainer.find('#viewList');
+
+
+	const lnkFeatArticlePos = $lnkFeatArticle.data('pos'),
+	lnkFeatNewsPos = $lnkFeatNews.data('pos'),
+	lnkFeatListPos = $lnkFeatList.data('pos');
+
+	const dotFeatArticlePos =  $dotFeatArticle.data('pos'),
+	dotFeatNewsPos = $dotFeatNews.data('pos'),
+	dotFeatListPos = $dotFeatList.data('pos');
 
 	const animSpeed = 800;
-
-	const lnkFeatArticlePos = 1;
-	const lnkFeatNewsPos = 2;
-	const lnkFeatListPos = 3;
-
-	const dotFeatArticlePos = 1;
-	const dotFeatNewsPos = 2;
-	const dotFeatListPos = 3;
-
 	//Current position of the carousel
 	let currentPos = 1;
 	//Currently active buttons relative to carousel position
@@ -94,6 +94,7 @@
 		if (currentPos === 1) {
 			currentActiveGrp = [$lnkFeatArticle, $dotFeatArticle];
 			$viewArticle.show();
+			//TODO :Create and pass object of elements to hide
 			$viewNews.hide();
 			$viewList.hide();
 
