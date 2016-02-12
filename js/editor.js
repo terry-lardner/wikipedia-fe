@@ -140,7 +140,7 @@
 	    if (!html) {
 	    	errorState = 1;
 			$formMsg.addClass('callout alert');
-			$formMsg.html(`Content is empty.`);
+			$formMsg.html('Content is empty.');
 	     	break;
 	    } else if (html.indexOf(illegalPrefix + illegalItem) > -1) {
 	    	errorState = 2;
@@ -183,7 +183,7 @@
 		showElements([$contentViewport]);
 	}
 
-	// checkAvailability();
+	checkAvailability();
 
 }());
 
