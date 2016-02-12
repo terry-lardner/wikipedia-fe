@@ -157,7 +157,7 @@
 	  errorState = 0;	    
 	});
 
-	$btnCancel.on('click', () => {
+	$btnCancel.on('click', function() {
 		hideElements([$btnTestData, $inputContainer]);
 		showElements([$contentViewport]);
 
