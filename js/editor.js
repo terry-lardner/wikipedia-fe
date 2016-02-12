@@ -183,7 +183,7 @@
 		showElements([$contentViewport]);
 	}
 
-	checkAvailability();
+	// checkAvailability();
 
 }());
 
