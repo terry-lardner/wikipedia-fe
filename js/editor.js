@@ -287,12 +287,22 @@
 
 	//Input test data
 	$btnTestData.on('click', function() {
-		var client = new XMLHttpRequest();
-		client.open('GET', './testArticle.html');
-		client.onreadystatechange = function() {
-		  $txtContent.val(client.responseText);
+		$articleTitle.val('Arthur Sifton');
+		$imageUrl.val('Arthur_Lewis_Watkins_Sifton.jpg');
+
+		var clientContent = new XMLHttpRequest();
+		clientContent.open('GET', './testArticle.html');
+		clientContent.onreadystatechange = function() {
+		  $txtContent.val(clientContent.responseText);
 		}
-		client.send();
+		clientContent.send();
+
+		var clientContentFeat = new XMLHttpRequest();
+		clientContentFeat.open('GET', './testFeature.html');
+		clientContentFeat.onreadystatechange = function() {
+		  $txtContentFeat.val(clientContentFeat.responseText);
+		}
+		clientContentFeat.send();
 	});
 
 	//Save Article
