@@ -511,10 +511,19 @@ ul {
   article pages
   ========================================
 */
-.textareaHtml {
+.imageUrl,
+.txtContent,
+.txtContentFeat {
+	font-size: 14px;
+}
+.txtContent {
 	min-height: 500px;
 	max-height: 1000px;
-	font-size: 14px;
+}
+.txtContentFeat {
+	border: 1px solid #FFD553;
+	min-height: 250px;
+	max-height: 500px;
 }
 
 .btnContainer {
@@ -538,6 +547,9 @@ ul {
 	padding: 8px;
 }
 
+.inputContainer label {
+	font-weight: bold;
+}
 /*
   ========================================
   article pages - html tag overrides
