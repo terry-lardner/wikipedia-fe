@@ -145,7 +145,7 @@
 	    } else if (html.indexOf(illegalPrefix + illegalItem) > -1) {
 	    	errorState = 2;
 			$formMsg.addClass('callout alert');
-			$formMsg.html(illegalItem + ' tags are not allowed.');
+			$formMsg.html('&lt;' + illegalItem + '&gt;' + 'tags are not allowed.');
 			break;
 	    }    
 	  }
