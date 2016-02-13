@@ -1,7 +1,7 @@
 'use strict';
 
-var pauseOps = 0;
-var networkAvailable = 0; // 0: no connection to Server, 1: Server is available
+let pauseOps = 0;
+let networkAvailable = 0; // 0: no connection to Server, 1: Server is available
 
 (function() {
 		
@@ -10,23 +10,22 @@ var networkAvailable = 0; // 0: no connection to Server, 1: Server is available
 
 		$.ajax({
 			type: 'GET',
-			url: location.protocol + '//' + location.hostname + ':3000/test',
+			url: `${location.protocol}//${location.hostname}:3000/test'`,
 			success: function() {
 				networkAvailable = 1;				
 				pauseOps = 0;
-				console.log('Connection established to Wikipedia-be.');
+				console.log(`Connection established to ${this.url}.`);
 			},
 			error: function(err) {
 				networkAvailable = 0;
 				pauseOps = 0;
-				console.log('NO Connection to Wikipedia-be [' + JSON.stringify(err) + ']');
+				console.log(`NO Connection to ${this.url}. [${JSON.stringify(err)}]`);
 
 			},
 		});
 	}
 
 	//Init
-	checkAvailability();
-	
+	checkAvailability();	
 }());
 

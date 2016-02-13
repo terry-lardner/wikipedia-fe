@@ -1,8 +1,7 @@
 'use strict';
 
-
 (function() {
-	var $btnEdit = $('#btnEdit'),
+	const $btnEdit = $('#btnEdit'),
 	$contentContainer = $('#contentContainer'),
 	$contentViewport = $('#contentContainer').find('#contentViewport'),
 	$inputContainer = $('#inputContainer'),
@@ -16,25 +15,23 @@
 	$btnCancel = $('#inputContainer').find('#btnCancel'),
 	$formMsg = $('#inputContainer').find('#formMsg');
 
-	var illegal = ['style', 'html', 'body', 'script'];
-
-	var illegalItem,
-	errorState; //0: no error, 1:empty html form, 2:general tag error, 3: Error with network, 4: No article title, 5:featured checked without content
-
-	// var networkCheck;
-	// var networkAvailable = 0; // 0: no connection to Server, 1: Server is available
-
-	//Evaluate for performance, maybe use regex.
-	var serverPort = 3000;
-	var serverUrl = location.protocol + '//' + location.hostname + ':' + serverPort + '/';
-	var url = window.location.href;
-	var queryIndex = url.indexOf('?') + 1;
-	var articleTitle = url.substring(queryIndex);
-
 	//For Test data
-	var $testDiv = $contentContainer.find('.testDiv'),
+	const $testDiv = $contentContainer.find('.testDiv'),
 	$networkStatus =  $contentContainer.find('#networkStatus'),
 	$btnTestData = $contentContainer.find('#btnTestData');
+
+	const illegal = ['style', 'html', 'body', 'script'];
+
+	//Evaluate for performance, maybe use regex.
+	const serverPort = 3000;
+	const serverUrl = `${location.protocol}//${location.hostname}:${serverPort}`;
+	const url = window.location.href;
+	const queryIndex = url.indexOf('?') + 1;
+	const articleTitle = url.substring(queryIndex);
+
+	let illegalItem,
+	errorState; //0: no error, 1:empty html form, 2:general tag error, 3: Error with network, 4: No article title, 5:featured checked without content
+
 
 	function init() {
 		if (networkAvailable) {
@@ -55,10 +52,10 @@
 	}
 
 	function getArticleByTitle() {
-		console.log('Retrieving article : [' + articleTitle + ']');
+		console.log(`Retrieving article : [${articleTitle}]`);
 		$.ajax({
 			type: 'GET',
-			url: serverUrl + articleTitle,
+			url: `${serverUrl}/${articleTitle}`,
 			success: function(data) {
 				if (data.title) {
 					$articleTitle.val(data.title.replace('_', ' '));
@@ -69,8 +66,7 @@
 
 					if (data.featured) {
 						$featured.prop('checked', true);
-					}
-				
+					}				
 				}
 					
 				evalContentViewport();		
@@ -95,10 +91,10 @@
 	}
 
 	function processForm(o) {
-		var illegalPrefix = '<',
-	  	content = $txtContent.val();
+		const illegalPrefix = '<';
+	  	let content = $txtContent.val();
 
-	  for (var i=0; i<illegal.length; i++) {    
+	  for (let i=0; i<illegal.length; i++) {    
 	    illegalItem = illegal[i];
 
 	    //Error cases
@@ -110,7 +106,7 @@
 	    } else if (content.indexOf(illegalPrefix + illegalItem) > -1) {
 	    	errorState = 2;
 			$formMsg.addClass('callout alert');
-			$formMsg.html('&lt;' + illegalItem + '&gt;' + 'tags are not allowed.');
+			$formMsg.html(`&lt;${illegalItem}&gt; tags are not allowed`);
 			break;
 	    } else if (!$articleTitle.val()) {
 	    	errorState = 4;
@@ -137,14 +133,14 @@
 	}
 
 	function saveArticle(o) {
-		var article = {
+		let article = {
 			content: $txtContent.val(),
 			contentFeat: $txtContentFeat.val(),
 			featured: $featured.is(':checked'),
 			imageUrl: $imageUrl.val()
 		};
 
-		var updating = o.data.updating;
+		let updating = o.data.updating;
 
 		//If the save button was clicked save as new article, else update the article in view.
 		if (!updating) {
@@ -152,14 +148,14 @@
 
 			$.ajax({
 				type: 'POST',
-				url: serverUrl + 'saveArticle',
+				url: `${serverUrl}/saveArticle`,
 				data: article,
 				success: function(data) {
 					hideElements([$btnTestData, $inputContainer]);
 					showElements([$contentViewport]);
 
 					processhtml(data.content, convertToHtml);
-					console.log('ADDED article : [' + data.title + ']')
+					console.log(`'ADDED article : [${data.title}]`)
 				},
 				error: function(err) {
 					errorState = 3;
@@ -170,14 +166,14 @@
 		} else {
 			$.ajax({
 				type: 'PUT',
-				url: serverUrl + 'updateArticle/' + articleTitle,
+				url: `${serverUrl}/updateArticle/${articleTitle}`,
 				data: article,
 				success: function(data) {
 					hideElements([$btnTestData, $inputContainer]);
 					showElements([$contentViewport]);
 
 					processhtml(data.content, convertToHtml);
-					console.log('UPDATED article : [' + data.title + ']')
+					console.log(`UPDATED article : [${data.title}]`)
 
 				},
 				error: function(err) {
@@ -273,8 +269,8 @@
 	});
 
 	//Enable edit mode
-	$btnEdit.on('click', function() {
-		var content = $contentViewport.html();
+	$btnEdit.on('click', () => {
+		let content = $contentViewport.html();
 
 		hideElements([$contentViewport, $btnSave, $btnUpdate]);
 		showElements([$btnTestData, $inputContainer]);
@@ -290,7 +286,7 @@
 	});
 
 	//Cancel edit mode
-	$btnCancel.on('click', function() {
+	$btnCancel.on('click', () => {
 		hideElements([$btnTestData, $inputContainer]);
 		showElements([$contentViewport]);
 
@@ -298,18 +294,18 @@
 	});
 
 	//Input test data
-	$btnTestData.on('click', function() {
+	$btnTestData.on('click', () => {
 		$articleTitle.val('Arthur Sifton');
 		$imageUrl.val('Arthur_Lewis_Watkins_Sifton.jpg');
 
-		var clientContent = new XMLHttpRequest();
+		const clientContent = new XMLHttpRequest();
 		clientContent.open('GET', './testArticle.html');
 		clientContent.onreadystatechange = function() {
 		  $txtContent.val(clientContent.responseText);
 		}
 		clientContent.send();
 
-		var clientContentFeat = new XMLHttpRequest();
+		const clientContentFeat = new XMLHttpRequest();
 		clientContentFeat.open('GET', './testFeature.html');
 		clientContentFeat.onreadystatechange = function() {
 		  $txtContentFeat.val(clientContentFeat.responseText);

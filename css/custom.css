@@ -733,7 +733,7 @@ ul {
 	.featured-nav-dot {
 		display: none;
 	}
-
+}
 @media screen and (min-width:60em) {
 	.ss-news {
 		border-radius: 0 10px 0 0;	
