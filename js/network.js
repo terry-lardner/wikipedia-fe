@@ -10,7 +10,7 @@ var networkAvailable = 0; // 0: no connection to Server, 1: Server is available
 
 		$.ajax({
 			type: 'GET',
-			url: 'http://localhost:3000/test',
+			url: location.protocol + '//' + location.hostname + ':3000/test',
 			success: function() {
 				networkAvailable = 1;				
 				pauseOps = 0;

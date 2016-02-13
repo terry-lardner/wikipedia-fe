@@ -19,12 +19,14 @@
 	var illegal = ['style', 'html', 'body', 'script'];
 
 	var illegalItem,
-	errorState; //0: no error, 1:empty html form, 2:general tag error, 3: Error with network, 4: No article title
+	errorState; //0: no error, 1:empty html form, 2:general tag error, 3: Error with network, 4: No article title, 5:featured checked without content
 
 	// var networkCheck;
 	// var networkAvailable = 0; // 0: no connection to Server, 1: Server is available
 
 	//Evaluate for performance, maybe use regex.
+	var serverPort = 3000;
+	var serverUrl = location.protocol + '//' + location.hostname + ':' + serverPort + '/';
 	var url = window.location.href;
 	var queryIndex = url.indexOf('?') + 1;
 	var articleTitle = url.substring(queryIndex);
@@ -56,7 +58,7 @@
 		console.log('Retrieving article : [' + articleTitle + ']');
 		$.ajax({
 			type: 'GET',
-			url: 'http://localhost:3000/' + articleTitle,
+			url: serverUrl + articleTitle,
 			success: function(data) {
 				if (data.title) {
 					$articleTitle.val(data.title.replace('_', ' '));
@@ -73,7 +75,7 @@
 					
 				evalContentViewport();		
 			},
-			error: function() {
+			error: function(err) {
 				errorState = 3;
 				removeStatusMsg();
 				$formMsg.addClass('callout alert').html(JSON.stringify(err));
@@ -94,18 +96,18 @@
 
 	function processForm(o) {
 		var illegalPrefix = '<',
-	  	html = $txtContent.val();
+	  	content = $txtContent.val();
 
 	  for (var i=0; i<illegal.length; i++) {    
 	    illegalItem = illegal[i];
 
 	    //Error cases
-	    if (!html) {
+	    if (!content) {
 	    	errorState = 1;
 			$formMsg.addClass('callout alert');
 			$formMsg.html('Content is empty.');
 	     	break;
-	    } else if (html.indexOf(illegalPrefix + illegalItem) > -1) {
+	    } else if (content.indexOf(illegalPrefix + illegalItem) > -1) {
 	    	errorState = 2;
 			$formMsg.addClass('callout alert');
 			$formMsg.html('&lt;' + illegalItem + '&gt;' + 'tags are not allowed.');
@@ -115,12 +117,17 @@
 			$formMsg.addClass('callout alert');
 			$formMsg.html('An article title is required.');
 			break;
+	    } else if ($featured.is(':checked') && !$txtContentFeat.val()) {
+	    	errorState = 4;
+			$formMsg.addClass('callout alert');
+			$formMsg.html('Featured Content must be added if you want to feature this article');
+			break;
 	    }
 	  }
 	  
 	  if (!errorState) {
 	  	if (!networkAvailable) {
-			processhtml(html, convertToHtml);
+			processhtml(content, convertToHtml);
 		} else {
 			saveArticle(o);			
 		}	  	
@@ -145,7 +152,7 @@
 
 			$.ajax({
 				type: 'POST',
-				url: 'http://127.0.0.1:3000/saveArticle',
+				url: serverUrl + 'saveArticle',
 				data: article,
 				success: function(data) {
 					hideElements([$btnTestData, $inputContainer]);
@@ -163,7 +170,7 @@
 		} else {
 			$.ajax({
 				type: 'PUT',
-				url: 'http://127.0.0.1:3000/updateArticle/' + articleTitle,
+				url: serverUrl + 'updateArticle/' + articleTitle,
 				data: article,
 				success: function(data) {
 					hideElements([$btnTestData, $inputContainer]);
@@ -192,17 +199,22 @@
 		$contentViewport.html(callback(html));
 	}
 
-	function convertToHtml(html) {
-		html = html.replace(/\<image\>\n/g, '<div class="image">');
-		html = html.replace(/\n\<\/image\>/g, '</div>');
+
+	//Convert What-You-See to html format
+	function convertToHtml(html) {		
+		html = html.replace(/\n<image\>\n/g, '<div class="image">');
+		html = html.replace(/\n\<\/image\>\n/g, '</div>');
+		html = html.replace(/\<img src=\"/g, '<img src="img/wiki-img/');
 		html = html.replace(/\n/g, '<br>');
 		return html;
 	}
 
+	//Convert html format to What-You-See 
 	function convertToWYS(content) {
 		content = content.replace(/\<br\>/g, '\n');
-		content = content.replace(/\<div class="image"\>/g, '<image>\n');
-		content = content.replace(/\<\/div\>/g, '\n</image>');
+		content = content.replace(/\<div class="image"\>/g, '\n<image>\n');		
+		content = content.replace(/\<\/div\>/g, '\n</image>\n');
+		content = content.replace(/\<img src=\"img\/wiki-img\//g, '<img src="');
 		return content;
 	}
 
@@ -311,19 +323,14 @@
 	//Update Article
 	$btnUpdate.on('click', {updating: true}, processForm);
 
-
-	
-
-
-
-/* 
+	/* 
 		Init
 	*/
 	$networkStatus.removeClass();
 	$networkStatus.html('*....*');
 
 // Are we network ready?
-setTimeout(init, 100);
+setTimeout(init, 500);
 	
 }());
 

@@ -69,7 +69,7 @@ gulp.task('build', ['html', 'fonts', 'images', 'css', 'js']);
 gulp.task('serve', () => {
 	browserSync({
 		notify: false,
-		port: 5000,
+		port: 5002,
 		server: {
 		  baseDir: ['./']
 		}		
@@ -86,7 +86,7 @@ gulp.task('serve', () => {
 gulp.task('serve:dist', () => {
 	browserSync({
 		notify: false,
-		port: 5000,
+		port: 5002,
 		server: {
 		  baseDir: ['dist']
 		}		

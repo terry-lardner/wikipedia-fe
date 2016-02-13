@@ -40,7 +40,7 @@
                         </ul>
                         <ul>
                             <li class="off-canvas-nav-title">Interaction</li>
-                            <li><a class="button" href="article.html">Create An Article</a></li>
+                            <li><a class="button" href="article.html">Create New Wiki</a></li>
                             <li><a class="button" href="index.html">Help</a></li>
                             <li><a class="button" href="index.html">Community Portal</a></li>
                             <li><a class="button" href="index.html">Recent Changes</a></li>
@@ -86,14 +86,14 @@
                                 <li class="title-full"><h4 class="main-title">Welcome to <a href="https://en.wikipedia.org/" target="_blank">Wikipedia</a>,</h4><span class="main-subtitle">the free encyclopedia that anyone can edit.</span></li>
                             </ul>                            
                         </nav>
-                        <section id="wikiContent" class="wiki-content">                            
+                        <div id="wikiContent" class="wiki-content">                            
                             <div class="edit-menu">
                                 <a id="btnEdit">Edit this article</a>
                             </div>
-                            <section id="contentContainer" class="contentContainer">
-                                <div id="contentViewport" class="contentViewport"></div>
+                            <div id="contentContainer" class="contentContainer">
+                                <section id="contentViewport" class="contentViewport"></section>
                                 <div id="inputContainer" class="hide inputContainer">
-                                    <label for="article-title"> Article Title :</label>
+                                    <label for="article-title">Article Title :</label>
                                     <input type="text" id="article-title" placeholder="Enter the title for the article here."></input>                              
                                     <label for="txtContent">Main Content :</label>                               
                                     <textarea id="txtContent" class="txtContent" placeholder="Main Article content here.."></textarea>
@@ -101,8 +101,7 @@
                                     <textarea id="txtContentFeat" class="txtContentFeat" placeholder="Content to show on the Featured Page goes here."></textarea>                                    
                                     <label for="imageUrl"> Primary Article Image : </label>                              
                                     <input type="text" id="imageUrl" class="imageUrl" placeholder="Filename of article's image"></input>
-                                    <input id="featured" type="checkbox"><label for="featured">Feature this Article?</label>
-                                      
+                                    <input id="featured" type="checkbox"><label for="featured">Feature this Article?</label>                                      
                                     <p id="formMsg" class="callout"></p>
                                     <div class="btnContainer">
                                         <button id="btnSave" class="button">Save</button>
@@ -114,8 +113,8 @@
                                     <a id="btnTestData">Insert test data</a>
                                     <span id="networkStatus"></span>
                                 </div>
-                            </section>
-                        </section>             
+                            </div>
+                        </div>             
                     </div>                
                 </div>
             </div>
