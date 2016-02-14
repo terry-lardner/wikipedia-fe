@@ -33,7 +33,7 @@
 	errorState; //0: no error, 1:empty html form, 2:general tag error, 3: Error with network, 4: No article title, 5:featured checked without content, 6: article title already exists
 
 	function getArticleByTitle() {
-		console.log(`Retrieving article : [${articleTitle}]`);
+		console.log(`Retrieved article : [${articleTitle}]`);
 		$.ajax({
 			type: 'GET',
 			url: `${serverUrl}/${articleTitle}`,

@@ -127,15 +127,17 @@
 	}
 
 	function getFeatArticle() {
-		console.log(`Getting featured article.`);
 		$.ajax({
 			type: 'GET',
 			url: `${serverUrl}/feat`,
 			success: function(data) {
 				if (data) {
 					render(data);
+					console.log(`Retrieved featured article : [${data.title}]`);
 				}
-				
+				else {
+					console.log('No featured articles available yet.');
+				}				
 			},
 			error: function(err) {
 				console.log(`Failed to retreive article ${JSON.stringify(err)}`);
