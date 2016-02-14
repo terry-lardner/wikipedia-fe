@@ -10,7 +10,11 @@
 	$dotFeatList = $featNavContainer.find('#dot-feat-list');
 
 	const $carouselContainer = $('#carouselContainer'),
-	$featCarousel = $carouselContainer.find('#featCarousel');		
+	$featCarousel = $carouselContainer.find('#featCarousel'),
+	$featuredImg = $featCarousel.find('#featuredImg'),
+	$featuredText = $featCarousel.find('#featuredText'),
+	templateFeaturedImg = $featCarousel.find('#templateFeaturedImg').html(),
+	templateFeaturedText = $featCarousel.find('#templateFeaturedText').html();
 
 	const $viewArticle = $carouselContainer.find('#viewArticle'),
 	$viewNews = $carouselContainer.find('#viewNews'),
@@ -25,6 +29,9 @@
 	const dotFeatArticlePos =  $dotFeatArticle.data('pos'),
 	dotFeatNewsPos = $dotFeatNews.data('pos'),
 	dotFeatListPos = $dotFeatList.data('pos');
+
+	const serverPort = 3000;
+	const serverUrl = `${location.protocol}//${location.hostname}:${serverPort}`;
 
 	const animSpeed = 800;
 	//Current position of the carousel
@@ -41,6 +48,11 @@
 
 	const customDrilldown = new Foundation.Drilldown($customDrilldown, options);
 	*/
+
+	function render(obj) {
+		$featuredImg.html((Mustache.render(templateFeaturedImg, obj)));
+		$featuredText.html((Mustache.render(templateFeaturedText, obj)));
+	}
 
 	//Calculate current position of carousel and slide to correct position.
 	function doSlide(e) {
@@ -114,6 +126,23 @@
 		};
 	}
 
+	function getFeatArticle() {
+		console.log(`Getting featured article.`);
+		$.ajax({
+			type: 'GET',
+			url: `${serverUrl}/feat`,
+			success: function(data) {
+				if (data) {
+					render(data);
+				}
+				
+			},
+			error: function(err) {
+				console.log(`Failed to retreive article ${JSON.stringify(err)}`);
+			}
+		});
+	}
+
 	//Optional: Hide out-of-sight panels on page load
 	$viewNews.hide();
 	$viewList.hide();	
@@ -128,4 +157,11 @@
 	$dotFeatArticle.on('click', {pos:dotFeatArticlePos}, doSlide);
 	$dotFeatNews.on('click', {pos:dotFeatNewsPos}, doSlide);
 	$dotFeatList.on('click', {pos:dotFeatListPos}, doSlide);
+
+
+	if ($lnkFeatArticle) {
+		getFeatArticle();
+	}
+
+
 }());

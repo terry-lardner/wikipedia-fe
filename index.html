@@ -130,15 +130,22 @@
                                             --><li><a data-pos="3" id="dot-feat-list" class="button feat-dot" href="#"></a></li>
                                         </ul>
                                     </div>
+
                                     <div id="carouselContainer" class="carousel-container">
                                         <div id="featCarousel" class="carousel">
+                                            <template id="templateFeaturedImg">
+                                                <a href="article.html?{{title}}"><img class="image-prev" src="img/wiki-img/{{imageUrl}}"></a>
+                                            </template>
+                                            <template id="templateFeaturedText">
+                                                {{{contentFeat}}} (<a href="article.html?{{title}}"><strong>Full article...</strong></a>)
+                                            </template>
                                             <div id="viewArticle" class="feat-inline feat-article">
                                                 <div class="expanded row">
-                                                    <div class="column medium-3 large-4">
+                                                    <div id="featuredImg" class="column medium-3 large-4">
                                                         <a href="article.html?Arthur_Sifton"><img class="image-prev" src="img/wiki-img/Arthur_Lewis_Watkins_Sifton.jpg"></a>
                                                     </div>
                                                      <article class="column medium-9 large-8">
-                                                        <p><a href="article.html?Arthur_Sifton"><strong>Arthur Sifton</strong></a> (1858–1921) was the <a href="#">second Premier of Alberta</a> from 1910 to 1917 and a minister in the <a href="#">Government of Canada thereafter</a>. When Alberta was created out of a portion of the Northwest Territories in 1905, Sifton became its first chief justice. In 1910 the Alberta government of Premier Alexander Cameron Rutherford was embroiled in the Alberta and Great Waterways Railway scandal; Rutherford resigned, and the position was offered to Sifton. As premier, he failed to gain provincial control over natural resources, but succeeded in implementing some direct democracy measures, leading to prohibition and the extension of the vote to women. During the conscription crisis of 1917, Sifton supported the Conservative Prime Minister, Robert Borden, in his attempt to impose conscription to help win the First World War. He backed the creation of a Union government composed of Conservatives and pro-conscription Liberals. In 1917 he left provincial politics and became a minister in this government. Over the next three and a half years he served briefly in four ministries and was a delegate to the <a href="#">Paris Peace Conference of 1919</a>. (<a href="article.html?Arthur_Sifton"><strong>Full article...</strong></a>)</p>
+                                                        <p id="featuredText"><a href="article.html?Arthur_Sifton"><strong>Arthur Sifton</strong></a> (1858–1921) was the <a href="#">second Premier of Alberta</a> from 1910 to 1917 and a minister in the <a href="#">Government of Canada thereafter</a>. When Alberta was created out of a portion of the Northwest Territories in 1905, Sifton became its first chief justice. In 1910 the Alberta government of Premier Alexander Cameron Rutherford was embroiled in the Alberta and Great Waterways Railway scandal; Rutherford resigned, and the position was offered to Sifton. As premier, he failed to gain provincial control over natural resources, but succeeded in implementing some direct democracy measures, leading to prohibition and the extension of the vote to women. During the conscription crisis of 1917, Sifton supported the Conservative Prime Minister, Robert Borden, in his attempt to impose conscription to help win the First World War. He backed the creation of a Union government composed of Conservatives and pro-conscription Liberals. In 1917 he left provincial politics and became a minister in this government. Over the next three and a half years he served briefly in four ministries and was a delegate to the <a href="#">Paris Peace Conference of 1919</a>.</p>
                                                         <p>
                                                             <ul class="article-sub-links">
                                                                 Recently featured:
@@ -165,7 +172,7 @@
                                                         </ul>
                                                         <ul class="article-sub-links">                               
                                                             <li><a href="#"><strong>Recently improved articles</strong></a></li>
-                                                            <li>&#8226; <a href="#"><strong>Start a new article</strong></a></li>
+                                                            <li>&#8226; <a href="article.html"><strong>Start a new article</strong></a></li>
                                                             <li>&#8226; <a href="#"><strong>Nominate an article</strong></a></li>                               
                                                         </ul>
                                                     </article>
@@ -272,10 +279,11 @@
             </ul>
         </footer>
 
+        
         <script src="js/vendor/jquery.min.js" type="text/javascript"></script>
-        <script src="js/vendor/mustache.min.js" type="text/javascript"></script>
         <!-- // <script src="js/vendor/what-input.min.js" type="text/javascript"></script> -->
         <script src="js/vendor/foundation.min.js" type="text/javascript"></script>
+        <script src="js/vendor/mustache.min.js" type="text/javascript"></script>
 
         <script src="js/plugins.js" type="text/javascript"></script>
         <script src="js/network.js" type="text/javascript"></script>

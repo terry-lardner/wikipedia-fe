@@ -30,26 +30,7 @@
 	const articleTitle = url.substring(queryIndex);
 
 	let illegalItem,
-	errorState; //0: no error, 1:empty html form, 2:general tag error, 3: Error with network, 4: No article title, 5:featured checked without content
-
-
-	function init() {
-		if (networkAvailable) {
-			$networkStatus.addClass('networkStatusOK');
-			$networkStatus.html('*ONLINE MODE*');
-
-			if (queryIndex) {					
-				getArticleByTitle();			
-			}
-		} else {
-			$networkStatus.addClass('networkStatusNOK');
-			$networkStatus.html('*OFFLINE MODE*');
-		}
-		
-		evalContentViewport();
-		//Prevent initial flash of the entire input form before js has a chance to evaluate
-		$inputContainer.removeClass('hide');
-	}
+	errorState; //0: no error, 1:empty html form, 2:general tag error, 3: Error with network, 4: No article title, 5:featured checked without content, 6: article title already exists
 
 	function getArticleByTitle() {
 		console.log(`Retrieving article : [${articleTitle}]`);
@@ -125,11 +106,31 @@
 	  	if (!networkAvailable) {
 			processhtml(content, convertToHtml);
 		} else {
-			saveArticle(o);			
+			saveArticle(o, ajaxSaveArticle);			
 		}	  	
 	  }
 
 	  errorState = 0;
+	}
+
+	function ajaxSaveArticle(article) {
+		$.ajax({
+			type: 'POST',
+			url: `${serverUrl}/saveArticle`,
+			data: article,
+			success: function(data) {
+				hideElements([$btnTestData, $inputContainer]);
+				showElements([$contentViewport]);
+
+				processhtml(data.content, convertToHtml);
+				console.log(`'ADDED article : [${data.title}]`);
+			},
+			error: function(err) {
+				errorState = 3;
+				removeStatusMsg();
+				$formMsg.addClass('callout alert').html(JSON.stringify(err));
+			}
+		});
 	}
 
 	function saveArticle(o) {
@@ -145,7 +146,28 @@
 		//If the save button was clicked save as new article, else update the article in view.
 		if (!updating) {
 			article.title = $articleTitle.val().replace(' ', '_');
+			article.featuredDate = 0;
 
+			//check if title already exists
+			$.ajax({
+				type: 'GET',
+				url: `${serverUrl}/${article.title}`,
+				success: function(data) {
+					if (data) {
+						errorState = 6;
+						$formMsg.addClass('callout alert');
+						$formMsg.html(`Sorry, an article for <em>${$articleTitle.val()}</em> already exists <a href="${url}?${article.title}"><strong>here</strong></a>.`);
+					} else {
+						ajaxSaveArticle(article);
+					}
+				},
+				error: function(err) {
+					errorState = 3;
+					removeStatusMsg();
+					$formMsg.addClass('callout alert').html(JSON.stringify(err));
+				}
+			});
+			/*
 			$.ajax({
 				type: 'POST',
 				url: `${serverUrl}/saveArticle`,
@@ -155,14 +177,14 @@
 					showElements([$contentViewport]);
 
 					processhtml(data.content, convertToHtml);
-					console.log(`'ADDED article : [${data.title}]`)
+					console.log(`'ADDED article : [${data.title}]`);
 				},
 				error: function(err) {
 					errorState = 3;
 					removeStatusMsg();
 					$formMsg.addClass('callout alert').html(JSON.stringify(err));
 				}
-			});
+			});*/
 		} else {
 			$.ajax({
 				type: 'PUT',
@@ -173,11 +195,11 @@
 					showElements([$contentViewport]);
 
 					processhtml(data.content, convertToHtml);
-					console.log(`UPDATED article : [${data.title}]`)
-
+					console.log(`UPDATED article : [${data.title}]`);
 				},
 				error: function(err) {
 					errorState = 3;
+					console.log(this.url)
 					removeStatusMsg();
 					$formMsg.addClass('callout alert').html(JSON.stringify(err));
 				}
@@ -290,7 +312,12 @@
 		hideElements([$btnTestData, $inputContainer]);
 		showElements([$contentViewport]);
 
-		$txtContent.val('');		
+		$txtContent.val('');
+		$articleTitle.val('');
+		$imageUrl.val('');
+		$txtContent.val('');
+		$txtContentFeat.val('');
+		$featured.prop('checked', false);
 	});
 
 	//Input test data
@@ -325,6 +352,24 @@
 	$networkStatus.removeClass();
 	$networkStatus.html('*....*');
 
+	
+	function init() {
+		if (networkAvailable) {
+			$networkStatus.addClass('networkStatusOK');
+			$networkStatus.html('*ONLINE MODE*');
+
+			if (queryIndex) {					
+				getArticleByTitle();			
+			}
+		} else {
+			$networkStatus.addClass('networkStatusNOK');
+			$networkStatus.html('*OFFLINE MODE*');
+		}
+		
+		evalContentViewport();
+		//Prevent initial flash of the entire input form before js has a chance to evaluate
+		$inputContainer.removeClass('hide');
+	}
 // Are we network ready?
 setTimeout(init, 500);
 	
