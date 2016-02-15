@@ -166,8 +166,7 @@
 			imageUrl: $imageUrl.val()
 		};
 
-		checkArticleByTitle($articleTitle.val(), article);	
-		
+		checkArticleByTitle($articleTitle.val(), article);		
 	}
 
 	function removeStatusMsg() {
@@ -217,9 +216,7 @@
 		    		processFormError(3, errorMsg);
 				}
 			});
-	}
-
-	
+	}	
 
 	function processhtml(html, callback) {  
 		//Apply form content
@@ -228,7 +225,6 @@
 
 		$contentViewport.html(callback(html));
 	}
-
 
 	//Convert What-You-See to html format
 	function convertToHtml(html) {
@@ -402,10 +398,6 @@
 		Init
 	*/
 	// Are we network ready?
-	setTimeout(init, 500);
-
-	
-
-	
+	setTimeout(init, 500);	
 }());
 
