@@ -561,6 +561,7 @@ ul {
 */
 
 .contentViewport {
+	font-family: 'Verdana' ; 
 	font-size: 13px;
 }
 
@@ -568,18 +569,12 @@ ul {
 	font-size: 30px;
 }
 
-.contentViewport h2 {
-	font-size: 25px;
-}
-
+.contentViewport h2,
 .contentViewport h3 {
 	font-size: 23px;
 }
 
-.contentViewport h4 {
-	font-size: 19px;
-}
-
+.contentViewport h4,
 .contentViewport h5 {
 	font-size: 15px;
 	font-weight: bold;	
@@ -587,10 +582,11 @@ ul {
 
 .contentViewport h1,
 .contentViewport h2,
-.contentViewport h3,
-.contentViewport h4 {
-	font-family: "Times New Roman";
+.contentViewport h3 {
+	font-family: "Times New Roman" ; 
 	border-bottom: 1px solid #A6A3A4;
+	clear: left;
+	line-height: 1;
 }
 
 .contentViewport h1,
@@ -598,19 +594,11 @@ ul {
 .contentViewport h3,
 .contentViewport h4,
 .contentViewport h5 {
-	clear: left;
 	margin: 0;
-	line-height: 1;
-}
-
-.contentViewport h2,
-.contentViewport h3,
-.contentViewport h4 {
-	padding: 10px 0 0 0;
+	padding-bottom: 5px;
 }
 
 .contentViewport ul {
-	/*clear: left;*/
 	margin: 0; 
 	padding: 0 0 0 40px;
 	list-style-type: square;
@@ -631,10 +619,9 @@ ul {
 
 .contentViewport img {
 	border: 1px solid #D9D5D6;
+	margin-bottom: 3px;
 	background: #fff;
 }
-
-
 
 /*
   ========================================
