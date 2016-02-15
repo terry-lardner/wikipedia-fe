@@ -13,7 +13,7 @@ let networkAvailable = 0; // 0: no connection to Server, 1: Server is available
 			success: function() {
 				networkAvailable = 1;				
 				pauseOps = 0;
-				console.log(`Connection established to ${this.url}`);
+				// console.log(`Connection established to ${this.url}`);
 			},
 			error: function(err) {
 				networkAvailable = 0;

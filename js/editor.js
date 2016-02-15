@@ -11,7 +11,6 @@
 	$txtContentFeat = $('#inputContainer').find('#txtContentFeat'),
 	$featured = $('#inputContainer').find('#featured'),
 	$btnSave = $('#inputContainer').find('#btnSave'),
-	$btnUpdate = $('#inputContainer').find('#btnUpdate'),
 	$btnCancel = $('#inputContainer').find('#btnCancel'),
 	$formMsg = $('#inputContainer').find('#formMsg');
 
@@ -22,25 +21,40 @@
 
 	const illegal = ['style', 'html', 'body', 'script'];
 
-	//Evaluate for performance, maybe use regex.
+	//Evaluate for performance, maybe use regex?
 	const serverPort = 3000;
 	const serverUrl = `${location.protocol}//${location.hostname}:${serverPort}`;
 	const url = window.location.href;
 	const queryIndex = url.indexOf('?') + 1;
-	const articleTitle = url.substring(queryIndex);
+	let articleId = url.substring(queryIndex);
 
 	let illegalItem,
-	errorState; //0: no error, 1:empty html form, 2:general tag error, 3: Error with network, 4: No article title, 5:featured checked without content, 6: article title already exists
+	errorMsg,
+	isNewArticle = 1; 
+
+	/*
+		=========================
+			ERROR CODES
+		=========================
+		 0: no error 
+		 1: Empty main content textbox 
+		 2: Illegal html tags found 
+		 3: General network error
+		 4: No Article ID
+		 5: Featured checkbox checked without actual featured content 
+		 6: Article already exists 
+		 7: Underscore in Article ID
+	*/
 
 	function getArticleByTitle() {
-		console.log(`Retrieved article : [${articleTitle}]`);
+		console.log(`Retrieved article : [${articleId}]`);
 		$.ajax({
 			type: 'GET',
-			url: `${serverUrl}/${articleTitle}`,
+			url: `${serverUrl}/${articleId}`,
 			success: function(data) {
-				if (data.title) {
-					$articleTitle.val(data.title.replace('_', ' '));
+				if (data) {	  	
 					$contentViewport.html(convertToHtml(data.content));	
+					$articleTitle.val(data.title.replace(/_/g, ' '));
 					$txtContentFeat.val(data.contentFeat);
 					$featured.val(data.featured);
 					$imageUrl.val(data.imageUrl);	
@@ -53,9 +67,34 @@
 				evalContentViewport();		
 			},
 			error: function(err) {
-				errorState = 3;
-				removeStatusMsg();
-				$formMsg.addClass('callout alert').html(JSON.stringify(err));
+				errorMsg = JSON.stringify(err);
+		    	processFormError(3, errorMsg);
+			}
+		});
+	}
+
+	function checkArticleByTitle(formTitle, article) {
+		//check if title already exists
+		$.ajax({
+			type: 'GET',
+			url: `${serverUrl}/${article.title}`,
+			success: function(data) {
+
+				if (isNewArticle) {
+					if (data) {
+						errorMsg = `Sorry, an article for <a target="_blank" href="${url}?${article.title}"><em>${formTitle}</em></a> already exists.`;
+		    			processFormError(6, errorMsg);
+					} else {
+						article.featuredDate = 0;
+						ajaxSaveArticle(article);
+					}
+				} else {
+					ajaxUpdateArticle(article);
+				}
+			},
+			error: function(err) {
+				errorMsg = JSON.stringify(err);
+		    	processFormError(3, errorMsg);
 			}
 		});
 	}
@@ -63,11 +102,13 @@
 	//show form to save a new article if no article is present
 	function evalContentViewport() {
 		if (!$contentViewport.html()) {
-		hideElements([$contentViewport, $btnUpdate]);
-		showElements([$btnTestData, $inputContainer, $btnSave]);
+			hideElements([$contentViewport]);
+			showElements([$btnTestData, $inputContainer, $btnSave]);
+			isNewArticle = 1;
 		} else {
 			hideElements([$btnTestData, $inputContainer]);
 			showElements([$contentViewport]);
+			isNewArticle = 0;
 		}	
 	}
 
@@ -75,42 +116,69 @@
 		const illegalPrefix = '<';
 	  	let content = $txtContent.val();
 
-	  for (let i=0; i<illegal.length; i++) {    
-	    illegalItem = illegal[i];
+	  	errorMsg = '';
 
-	    //Error cases
-	    if (!content) {
-	    	errorState = 1;
-			$formMsg.addClass('callout alert');
-			$formMsg.html('Content is empty.');
-	     	break;
-	    } else if (content.indexOf(illegalPrefix + illegalItem) > -1) {
-	    	errorState = 2;
-			$formMsg.addClass('callout alert');
-			$formMsg.html(`&lt;${illegalItem}&gt; tags are not allowed`);
-			break;
-	    } else if (!$articleTitle.val()) {
-	    	errorState = 4;
-			$formMsg.addClass('callout alert');
-			$formMsg.html('An article title is required.');
-			break;
-	    } else if ($featured.is(':checked') && !$txtContentFeat.val()) {
-	    	errorState = 4;
-			$formMsg.addClass('callout alert');
-			$formMsg.html('Featured Content must be added if you want to feature this article');
-			break;
-	    }
-	  }
+	  	//Numbers, letters and whitespace allowed.
+	  	let regex = /^[a-z0-9\s]*$/i;
+
+		for (let i=0; i<illegal.length; i++) {    
+		    illegalItem = illegal[i];
+
+		    //Error cases
+		    if (!content.trim()) {
+		    	errorMsg = 'Content is empty.';
+		    	processFormError(1, errorMsg);			
+		     	break;
+		    } else if (content.indexOf(illegalPrefix + illegalItem) > -1) {
+		    	errorMsg = `&lt;${illegalItem}&gt; tags are not allowed.`;
+		    	processFormError(2, errorMsg);
+				break;
+		    } else if (!$articleTitle.val().trim()) {
+		    	errorMsg = 'Article ID is required.';
+		    	processFormError(4, errorMsg);
+				break;
+		    } else if ($featured.is(':checked') && !$txtContentFeat.val().trim()) {
+		    	errorMsg = 'Featured Content must be added if you want to feature this article';
+		    	processFormError(5, errorMsg);
+				break;
+		    } else if ($articleTitle.val().match(regex) == null){
+		    	errorMsg = 'Only letters and numbers are allowed in the Article ID';
+		    	processFormError(7, errorMsg);
+				break;
+		    }
+		}
 	  
-	  if (!errorState) {
-	  	if (!networkAvailable) {
-			processhtml(content, convertToHtml);
-		} else {
-			saveArticle(o, ajaxSaveArticle);			
-		}	  	
-	  }
+		if (!errorMsg) {
+		  	if (!networkAvailable) {
+				processhtml(content, convertToHtml);
+			} else {
+				saveArticle();			
+			}	  	
+		}
+	}
 
-	  errorState = 0;
+	function saveArticle() {
+		let article = {
+			title: $articleTitle.val().replace(/\s/g, '_'),
+			content: $txtContent.val(),
+			contentFeat: $txtContentFeat.val(),
+			featured: $featured.is(':checked'),
+			imageUrl: $imageUrl.val()
+		};
+
+		checkArticleByTitle($articleTitle.val(), article);	
+		
+	}
+
+	function removeStatusMsg() {
+		$formMsg.html('').removeClass();
+	}
+
+	function processFormError(errcode, msg) {
+		removeStatusMsg();
+		$formMsg.addClass('callout alert');
+		// $formMsg.html(`Err ${errcode}: ${msg}`);
+		$formMsg.html(msg);
 	}
 
 	function ajaxSaveArticle(article) {
@@ -119,76 +187,23 @@
 			url: `${serverUrl}/saveArticle`,
 			data: article,
 			success: function(data) {
-				hideElements([$btnTestData, $inputContainer]);
-				showElements([$contentViewport]);
-
 				processhtml(data.content, convertToHtml);
-				console.log(`'ADDED article : [${data.title}]`);
+				// Override edit state of our page the article can be updated without having to reload the page.
+				articleId = data.title;
+				isNewArticle = 0;
+				console.log(`ADDED article : [${data.title}]`);
 			},
 			error: function(err) {
-				errorState = 3;
-				removeStatusMsg();
-				$formMsg.addClass('callout alert').html(JSON.stringify(err));
+				errorMsg = JSON.stringify(err);
+		    	processFormError(3, errorMsg);
 			}
 		});
 	}
 
-	function saveArticle(o) {
-		let article = {
-			content: $txtContent.val(),
-			contentFeat: $txtContentFeat.val(),
-			featured: $featured.is(':checked'),
-			imageUrl: $imageUrl.val()
-		};
-
-		let updating = o.data.updating;
-
-		//If the save button was clicked save as new article, else update the article in view.
-		if (!updating) {
-			article.title = $articleTitle.val().replace(' ', '_');
-			article.featuredDate = 0;
-
-			//check if title already exists
-			$.ajax({
-				type: 'GET',
-				url: `${serverUrl}/${article.title}`,
-				success: function(data) {
-					if (data) {
-						errorState = 6;
-						$formMsg.addClass('callout alert');
-						$formMsg.html(`Sorry, an article for <em>${$articleTitle.val()}</em> already exists <a href="${url}?${article.title}"><strong>here</strong></a>.`);
-					} else {
-						ajaxSaveArticle(article);
-					}
-				},
-				error: function(err) {
-					errorState = 3;
-					removeStatusMsg();
-					$formMsg.addClass('callout alert').html(JSON.stringify(err));
-				}
-			});
-			/*
-			$.ajax({
-				type: 'POST',
-				url: `${serverUrl}/saveArticle`,
-				data: article,
-				success: function(data) {
-					hideElements([$btnTestData, $inputContainer]);
-					showElements([$contentViewport]);
-
-					processhtml(data.content, convertToHtml);
-					console.log(`'ADDED article : [${data.title}]`);
-				},
-				error: function(err) {
-					errorState = 3;
-					removeStatusMsg();
-					$formMsg.addClass('callout alert').html(JSON.stringify(err));
-				}
-			});*/
-		} else {
-			$.ajax({
+	function ajaxUpdateArticle(article) {
+		$.ajax({
 				type: 'PUT',
-				url: `${serverUrl}/updateArticle/${articleTitle}`,
+				url: `${serverUrl}/updateArticle/${articleId}`,
 				data: article,
 				success: function(data) {
 					hideElements([$btnTestData, $inputContainer]);
@@ -198,16 +213,13 @@
 					console.log(`UPDATED article : [${data.title}]`);
 				},
 				error: function(err) {
-					errorState = 3;
-					console.log(this.url)
-					removeStatusMsg();
-					$formMsg.addClass('callout alert').html(JSON.stringify(err));
+					errorMsg = JSON.stringify(err);
+		    		processFormError(3, errorMsg);
 				}
 			});
-		}		
-
-		errorState = 0;
 	}
+
+	
 
 	function processhtml(html, callback) {  
 		//Apply form content
@@ -219,7 +231,7 @@
 
 
 	//Convert What-You-See to html format
-	function convertToHtml(html) {		
+	function convertToHtml(html) {
 		html = html.replace(/\n<image\>\n/g, '<div class="image">');
 		html = html.replace(/\n\<\/image\>\n/g, '</div>');
 		html = html.replace(/\<img src=\"/g, '<img src="img/wiki-img/');
@@ -236,13 +248,7 @@
 		return content;
 	}
 
-	function removeStatusMsg() {
-		$formMsg.html('').removeClass();
-	}
-
 	function hideElements(arr) {
-		removeStatusMsg();
-
 		if (arr.length > 1) {
 			for (var i=0; i<arr.length; i++) {
 				arr[i].hide();
@@ -253,8 +259,6 @@
 	}
 
 	function showElements(arr) {
-		removeStatusMsg();
-
 		if (arr.length > 1) {
 			for (var i=0; i<arr.length; i++) {
 				arr[i].show();
@@ -292,32 +296,39 @@
 
 	//Enable edit mode
 	$btnEdit.on('click', () => {
+		removeStatusMsg();
+
 		let content = $contentViewport.html();
 
-		hideElements([$contentViewport, $btnSave, $btnUpdate]);
+		// hideElements([$contentViewport, $btnSave]);
+		hideElements([$contentViewport]);
 		showElements([$btnTestData, $inputContainer]);
 
 		if (!$contentViewport.html()) {
-			showElements([$btnSave]);
-		} else {
-			$articleTitle.prop('disabled', true);
-			showElements([$btnUpdate]);
-		}
+			//Assuming a new article
+			// showElements([$btnSave]);
+			$txtContent.val('');
+			$articleTitle.val('');
+			$imageUrl.val('');
+			$txtContent.val('');
+			$txtContentFeat.val('');
+			$featured.prop('checked', false);
 
+			isNewArticle = 1;
+		} else {
+			//Assuming updating an existing article
+			$articleTitle.prop('disabled', true);
+			isNewArticle = 0;
+		}
 		$txtContent.val(convertToWYS(content));
 	});
 
 	//Cancel edit mode
 	$btnCancel.on('click', () => {
+		removeStatusMsg();
+
 		hideElements([$btnTestData, $inputContainer]);
 		showElements([$contentViewport]);
-
-		$txtContent.val('');
-		$articleTitle.val('');
-		$imageUrl.val('');
-		$txtContent.val('');
-		$txtContentFeat.val('');
-		$featured.prop('checked', false);
 	});
 
 	//Input test data
@@ -325,14 +336,14 @@
 		$articleTitle.val('Arthur Sifton');
 		$imageUrl.val('Arthur_Lewis_Watkins_Sifton.jpg');
 
-		const clientContent = new XMLHttpRequest();
+		let clientContent = new XMLHttpRequest();
 		clientContent.open('GET', './testArticle.html');
 		clientContent.onreadystatechange = function() {
 		  $txtContent.val(clientContent.responseText);
 		}
 		clientContent.send();
 
-		const clientContentFeat = new XMLHttpRequest();
+		let clientContentFeat = new XMLHttpRequest();
 		clientContentFeat.open('GET', './testFeature.html');
 		clientContentFeat.onreadystatechange = function() {
 		  $txtContentFeat.val(clientContentFeat.responseText);
@@ -341,37 +352,60 @@
 	});
 
 	//Save Article
-	$btnSave.on('click', {updating: false}, processForm);
-
-	//Update Article
-	$btnUpdate.on('click', {updating: true}, processForm);
-
-	/* 
-		Init
-	*/
-	$networkStatus.removeClass();
-	$networkStatus.html('*....*');
-
+	$btnSave.on('click', processForm);
 	
 	function init() {
 		if (networkAvailable) {
 			$networkStatus.addClass('networkStatusOK');
 			$networkStatus.html('*ONLINE MODE*');
 
+			//If we have a query string, attempt to find the related article
 			if (queryIndex) {					
 				getArticleByTitle();			
 			}
+
 		} else {
+			// ***FOR OFFLINE MODE ONLY***
+				$articleTitle.val('Arthur Sifton');
+				$imageUrl.val('Arthur_Lewis_Watkins_Sifton.jpg');
+				$featured.prop('checked', true);
+
+				let clientContent = new XMLHttpRequest();
+				clientContent.open('GET', './testArticle.html');
+				clientContent.onreadystatechange = function() {
+
+					$contentViewport.html(convertToHtml(clientContent.responseText));
+					evalContentViewport();
+				}
+				clientContent.send();
+
+				let clientContentFeat = new XMLHttpRequest();
+				clientContentFeat.open('GET', './testFeature.html');
+				clientContentFeat.onreadystatechange = function() {
+					$txtContentFeat.val(clientContentFeat.responseText);
+				}
+				clientContentFeat.send();
+			// ***FOR OFFLINE MODE ONLY***
+
 			$networkStatus.addClass('networkStatusNOK');
 			$networkStatus.html('*OFFLINE MODE*');
 		}
 		
-		evalContentViewport();
+		//Evaluate whether to show edit form or not
+		// evalContentViewport();
+
 		//Prevent initial flash of the entire input form before js has a chance to evaluate
 		$inputContainer.removeClass('hide');
 	}
-// Are we network ready?
-setTimeout(init, 500);
+
+	/* 
+		Init
+	*/
+	// Are we network ready?
+	setTimeout(init, 500);
+
+	
+
 	
 }());
 
