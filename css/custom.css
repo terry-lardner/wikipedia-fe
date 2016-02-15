@@ -610,10 +610,11 @@ ul {
 }
 
 .contentViewport ul {
-	clear: left;
-	margin: 0 0 0 26px; 
-	padding: 0;
-	list-style-type: disc;
+	/*clear: left;*/
+	margin: 0; 
+	padding: 0 0 0 40px;
+	list-style-type: square;
+	list-style-position: inside;
 }
 
 .contentViewport .image {
