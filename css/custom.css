@@ -602,11 +602,11 @@ ul {
 .contentViewport ol {
 	margin: 0; 
 	padding: 0 0 0 40px;
+	list-style-position: inside;
 }
 
 .contentViewport ul {
 	list-style-type: square;
-	list-style-position: inside;
 }
 
 .contentViewport .image {
