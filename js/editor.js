@@ -233,12 +233,17 @@
 	//Convert What-You-See to html format
 	function convertToHtml(html) {
 		html = html.replace(/\n<image\>\n/g, '<div class="image">')
-			.replace(/\n\<\/image\>\n/g, '</div>')
-			.replace(/\<img src=\"/g, '<img src="img/wiki-img/')
-			.replace(/\<b\>/g, '<strong>')
-			.replace(/\<\/b\>/g, '</strong>')
-			.replace(/\<i\>/g, '<em>')
-			.replace(/\<\/i\>/g, '</em>')
+			.replace(/\n<\/image>\n/g, '</div>')
+			.replace(/<img src="/g, '<img src="img/wiki-img/')
+			.replace(/<b>/g, '<strong>')
+			.replace(/<\/b>/g, '</strong>')
+			.replace(/<i>/g, '<em>')
+			.replace(/<\/i>/g, '</em>')
+			.replace(/\n<ul>/g, '<ul>')
+			.replace(/<\/ul>\n/g, '</ul>')
+			.replace(/\n<ol>/g, '<ol>')
+			.replace(/<\/ol>\n/g, '</ol>')
+			.replace(/<\/li>\n<li>/g, '</li><li>')
 			.replace(/\n/g, '<br>');
 		console.log('[View mode] Converted to HTML.');
 		return html;
@@ -246,14 +251,19 @@
 
 	//Convert html format to What-You-See 
 	function convertToWYS(content) {
-		content = content.replace(/\<br\>/g, '\n')
-				.replace(/\<div class="image"\>/g, '\n<image>\n')		
-				.replace(/\<\/div\>/g, '\n</image>\n')
-				.replace(/\<img src=\"img\/wiki-img\//g, '<img src="')
-				.replace(/\<strong\>/g, '<b>')
-				.replace(/\<\/strong\>/g, '</b>')
-				.replace(/\<em\>/g, '<i>')
-				.replace(/\<\/em\>/g, '</i>');
+		content = content.replace(/<br>/g, '\n')
+				.replace(/<div class="image">/g, '\n<image>\n')		
+				.replace(/<\/div>/g, '\n</image>\n')
+				.replace(/<img src="img\/wiki-img\//g, '<img src="')
+				.replace(/<strong>/g, '<b>')
+				.replace(/<\/strong>/g, '</b>')
+				.replace(/<em>/g, '<i>')
+				.replace(/<\/em>/g, '</i>')
+				.replace(/<ul>/g, '\n<ul>')
+				.replace(/<\/ul>/g, '</ul>\n')
+				.replace(/<ol>/g, '\n<ol>')
+				.replace(/<\/ol>/g, '</ol>\n')
+				.replace(/<\/li><li>/g, '</li>\n<li>');
 
 		console.log('[Edit mode] Converted to What-You-See.');
 		return content;

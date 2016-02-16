@@ -598,9 +598,13 @@ ul {
 	padding-bottom: 5px;
 }
 
-.contentViewport ul {
+.contentViewport ul,
+.contentViewport ol {
 	margin: 0; 
 	padding: 0 0 0 40px;
+}
+
+.contentViewport ul {
 	list-style-type: square;
 	list-style-position: inside;
 }
