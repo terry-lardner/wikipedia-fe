@@ -13,8 +13,6 @@
 	const queryIndex = url.indexOf('?') + 1;
 	const q = url.substring(queryIndex);
 
-	console.log(queryIndex);
-
 	//Do 'q.substring(2).trim()' if we don't want to send empty search strings to server.
 	if (queryIndex) {
 		$.ajax({
