@@ -159,8 +159,7 @@ ul {
   ========================================
 */
 .logo {
-	width: 65px;
-	margin-top: -4px
+	width: 60px;
 }
 
 .content-nav {
@@ -662,9 +661,33 @@ ul {
 
 .networkStatusOK {
 	color: green;
-} 
+}
 
-/* media queries */
+/*
+  ========================================
+  Search page
+  ========================================
+*/
+.search-results-title {
+	font-family: "Times New Roman";
+	border-bottom: 1px solid #D9D5D6;
+}
+
+.srchTitle {
+	font-weight: bold;
+	font-size: 13px;
+}
+
+.search-results li {
+	list-style-type: disc;
+	list-style-position: inside;
+}
+
+/*
+  ========================================
+  Media queries
+  ========================================
+*/
 @media screen and (max-width:39.9999em) {
 	.ss-meta {
 		border-radius: 0 10px 0 0;	
