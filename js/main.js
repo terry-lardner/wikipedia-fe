@@ -161,9 +161,7 @@
 	$dotFeatList.on('click', {pos:dotFeatListPos}, doSlide);
 
 
-	if ($lnkFeatArticle) {
+	if (templateFeaturedText || templateFeaturedImg) {
 		getFeatArticle();
 	}
-
-
 }());

@@ -7,6 +7,7 @@ import autoprefixer from 'gulp-autoprefixer';
 import uglify from 'gulp-uglify';
 import notify from 'gulp-notify';
 import babel from 'gulp-babel';
+import htmlreplace from 'gulp-html-replace';
 
 
 //load other plugins
@@ -15,9 +16,18 @@ import browserSync from 'browser-sync';
 
 const reload = browserSync.reload;
 
+//custom vars
+const css_min_filename = 'style.min.css';
+const js_min_filename = 'build.min.js';
+const browserSyncPort = 5000;
+
 //HTML task 
 gulp.task('html', () => {
 	gulp.src('*.html')
+	.pipe(htmlreplace({
+		'css': `css/${css_min_filename}`,
+		'js': `js/${js_min_filename}`
+	}))
     .pipe(gulp.dest('dist'));
 });
 
@@ -26,7 +36,7 @@ gulp.task('css', () => {
 	gulp.src('css/*.css')
 	.pipe(sourcemaps.init())
 	.pipe(cssnano())
-    .pipe(concat('style.min.css'))
+    .pipe(concat(css_min_filename))
 	.pipe(sourcemaps.write())
     .pipe(gulp.dest('dist/css'));
 
@@ -40,7 +50,7 @@ gulp.task('js', () => {
 	.pipe(babel())
 	.pipe(sourcemaps.init())
 	.pipe(uglify())
-	.pipe(concat('build.min.js'))	
+	.pipe(concat(js_min_filename))	
 	.pipe(sourcemaps.write())
 	.pipe(gulp.dest('dist/js'));
 
@@ -57,9 +67,6 @@ gulp.task('fonts', () => {
 
 //IMAGES task
 gulp.task('images', () => {
-	gulp.src(['*.*'])
-	.pipe(gulp.dest('dist'));
-
 	gulp.src('img/*.*')
 	.pipe(gulp.dest('dist/img'));
 
@@ -72,7 +79,7 @@ gulp.task('build', ['html', 'fonts', 'images', 'css', 'js']);
 gulp.task('serve', () => {
 	browserSync({
 		notify: false,
-		port: 5002,
+		port: browserSyncPort,
 		server: {
 		  baseDir: ['./']
 		}		
@@ -89,7 +96,7 @@ gulp.task('serve', () => {
 gulp.task('serve:dist', () => {
 	browserSync({
 		notify: false,
-		port: 5002,
+		port: browserSyncPort,
 		server: {
 		  baseDir: ['dist']
 		}		

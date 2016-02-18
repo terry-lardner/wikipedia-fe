@@ -5,7 +5,7 @@
 	$contentContainer = $('.contentContainer'),
 	$searchResultsTitle = $contentContainer.find('.search-results-title'),
 	$ul = $contentContainer.find('#search-results'),
-	template = $contentContainer.find('#template_search').html();
+	templateSearch = $contentContainer.find('#template_search').html();
 
 	const serverPort = 3000;
 	const serverUrl = `${location.protocol}//${location.hostname}:${serverPort}`;
@@ -14,7 +14,7 @@
 	const q = url.substring(queryIndex);
 
 	//Do 'q.substring(2).trim()' if we don't want to send empty search strings to server.
-	if (queryIndex) {
+	if (queryIndex && templateSearch) {
 		$.ajax({
 			type: 'GET',
 			url: `${serverUrl}/search/${q}`,
@@ -33,6 +33,6 @@
 	}	
 
 	function render(obj) {
-		$ul.append((Mustache.render(template, obj)));
+		$ul.append((Mustache.render(templateSearch, obj)));
 	}
 }());

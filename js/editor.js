@@ -30,7 +30,7 @@
 
 	let illegalItem,
 	errorMsg,
-	isNewArticle = 1; 
+	isNewArticle = 1;
 
 	/*
 		=========================
@@ -290,12 +290,14 @@
 	}
 
 	function init() {
+		console.log('Starting init');
+
 		if (networkAvailable) {
 			$networkStatus.addClass('networkStatusOK');
 			$networkStatus.html('*ONLINE MODE*');
 
 			//If we have a query string, attempt to find the related article
-			if (queryIndex) {					
+			if (queryIndex) {
 				getArticleByTitle();			
 			}
 
@@ -396,6 +398,10 @@
 		Init
 	*/
 	// Are we network ready?
-	setTimeout(init, 500);	
+	//Stop init from running on other pages (minified only). Kind of hacky...
+	if (typeof $formMsg.html() != 'undefined') {
+		setTimeout(init, 500);	
+	}
+
 }());
 
