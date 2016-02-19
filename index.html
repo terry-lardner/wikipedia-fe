@@ -30,38 +30,38 @@
             <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
                 <nav class="off-canvas position-left" id="offCanvas" data-off-canvas>
                     <div class="off-canvas-logo">
-                        <a href="index.html"><img src="img/wikipedia-logo.jpeg"></a>
+                        <a href="/"><img src="img/wikipedia-logo.jpeg"></a>
                     </div>
                     <div class="off-canvas-nav">
                         <ul>
-                            <li><a class="button" href="portals.html">All portals</a></li>
-                            <li><a class="button" href="index.html">Contents</a></li>
-                            <li><a class="button" href="index.html">Featured Content</a></li>
-                            <li><a class="button" href="index.html">Current events</a></li>
-                            <li><a class="button" href="index.html">Random Article</a></li>
+                            <li><a class="button" href="/">All portals</a></li>
+                            <li><a class="button" href="/">Contents</a></li>
+                            <li><a class="button" href="/">Featured Content</a></li>
+                            <li><a class="button" href="/">Current events</a></li>
+                            <li><a class="button" href="/">Random Article</a></li>
                         </ul>
                         <ul>
                             <li class="off-canvas-nav-title">Interaction</li>
-                            <li><a class="button" href="article.html">Create New Wiki</a></li>
-                            <li><a class="button" href="index.html">Help</a></li>
-                            <li><a class="button" href="index.html">Community Portal</a></li>
-                            <li><a class="button" href="index.html">Recent Changes</a></li>
+                            <li><a class="button" href="article">Create New Wiki</a></li>
+                            <li><a class="button" href="/">Help</a></li>
+                            <li><a class="button" href="/">Community Portal</a></li>
+                            <li><a class="button" href="/">Recent Changes</a></li>
                         </ul>
                         <ul>
                             <li class="off-canvas-nav-title">Tools</li>
-                            <li><a class="button" href="index.html">What links here</a></li>
-                            <li><a class="button" href="index.html">Related Changes</a></li>
-                            <li><a class="button" href="index.html">Upload file</a></li>
-                            <li><a class="button" href="index.html">Special pages</a></li>
-                            <li><a class="button" href="index.html">Permanent link</a></li>
-                            <li><a class="button" href="index.html">Page information</a></li>
-                            <li><a class="button" href="index.html">Wikidata item</a></li>
+                            <li><a class="button" href="/">What links here</a></li>
+                            <li><a class="button" href="/">Related Changes</a></li>
+                            <li><a class="button" href="/">Upload file</a></li>
+                            <li><a class="button" href="/">Special pages</a></li>
+                            <li><a class="button" href="/">Permanent link</a></li>
+                            <li><a class="button" href="/">Page information</a></li>
+                            <li><a class="button" href="/">Wikidata item</a></li>
                         </ul>
                         <ul>
                             <li class="off-canvas-nav-title">Print/Export</li>
-                            <li><a class="button" href="index.html">Create a book</a></li>
-                            <li><a class="button" href="index.html">Download as PDF</a></li>
-                            <li><a class="button" href="index.html">Printable version</a></li>
+                            <li><a class="button" href="/">Create a book</a></li>
+                            <li><a class="button" href="/">Download as PDF</a></li>
+                            <li><a class="button" href="/">Printable version</a></li>
                         </ul>                           
                     </div>
                 </nav>
@@ -73,15 +73,15 @@
                         <nav class="content-nav">
                             <ul class="hide user-nav">
                                 <li id="user-status-online" class="hide user-status-online">{{Username}}</li>
-                                <li><a href="index.html">Talk</a></li>
-                                <li><a href="index.html">Contributions</a></li>
-                                <li id="user-nav-register"><a href="index.html">Create account</a></li>
-                                <li id="user-nav-login"><a href="index.html">Log in</a></li>
+                                <li><a href="/">Talk</a></li>
+                                <li><a href="/">Contributions</a></li>
+                                <li id="user-nav-register"><a href="/">Create account</a></li>
+                                <li id="user-nav-login"><a href="/">Log in</a></li>
                             </ul>
                             <div class="logo-container">
-                                <a href="index.html" title=""><img class="logo" src="img/wikipedia_500_black.png"></a>
+                                <a href="/" title=""><img class="logo" src="img/wikipedia_500_black.png"></a>
                             </div>
-                            <form class="search-form" action="search.html" method="get">
+                            <form class="search-form" action="search" method="get">
                                 <input type="text" name="t" class="search-input" placeholder="Search Wikipedia...">
                             </form>
                             <ul class="wiki-title">
@@ -90,7 +90,7 @@
                         </nav>
                         <section id="wikiContent" class="wiki-content">                            
                             <div class="article-count">
-                                <span class="article-count-num">5,073,510</span> articles in <a href="index.html">English</a>
+                                <span class="article-count-num">5,073,510</span> articles in <a href="/">English</a>
                             </div>
                             <div class="hide menu-language">
                                 <ul class="menu-lang">
@@ -135,18 +135,18 @@
                                     <div id="carouselContainer" class="carousel-container">
                                         <div id="featCarousel" class="carousel">
                                             <template id="templateFeaturedImg">
-                                                <a href="article.html?{{title}}"><img class="image-prev" src="img/wiki-img/{{imageUrl}}"></a>
+                                                <a href="article?{{title}}"><img class="image-prev" src="img/wiki-img/{{imageUrl}}"></a>
                                             </template>
                                             <template id="templateFeaturedText">
-                                                {{{contentFeat}}} (<a href="article.html?{{title}}"><strong>Full article...</strong></a>)
+                                                {{{contentFeat}}} (<a href="article?{{title}}"><strong>Full article...</strong></a>)
                                             </template>
                                             <div id="viewArticle" class="feat-inline feat-article">
                                                 <div class="expanded row">
                                                     <div id="featuredImg" class="column medium-3 large-4">
-                                                        <a href="article.html?Arthur_Sifton"><img class="image-prev" src="img/wiki-img/Arthur_Lewis_Watkins_Sifton.jpg"></a>
+                                                        <a href="article?Arthur_Sifton"><img class="image-prev" src="img/wiki-img/Arthur_Lewis_Watkins_Sifton.jpg"></a>
                                                     </div>
                                                      <article class="column medium-9 large-8">
-                                                        <p id="featuredText"><a href="article.html?Arthur_Sifton"><strong>Arthur Sifton</strong></a> (1858–1921) was the <a href="#">second Premier of Alberta</a> from 1910 to 1917 and a minister in the <a href="#">Government of Canada thereafter</a>. When Alberta was created out of a portion of the Northwest Territories in 1905, Sifton became its first chief justice. In 1910 the Alberta government of Premier Alexander Cameron Rutherford was embroiled in the Alberta and Great Waterways Railway scandal; Rutherford resigned, and the position was offered to Sifton. As premier, he failed to gain provincial control over natural resources, but succeeded in implementing some direct democracy measures, leading to prohibition and the extension of the vote to women. During the conscription crisis of 1917, Sifton supported the Conservative Prime Minister, Robert Borden, in his attempt to impose conscription to help win the First World War. He backed the creation of a Union government composed of Conservatives and pro-conscription Liberals. In 1917 he left provincial politics and became a minister in this government. Over the next three and a half years he served briefly in four ministries and was a delegate to the <a href="#">Paris Peace Conference of 1919</a>. (<a href="article.html?Arthur_Sifton"><strong>Full article...</strong></a>)</p>
+                                                        <p id="featuredText"><a href="article?Arthur_Sifton"><strong>Arthur Sifton</strong></a> (1858–1921) was the <a href="#">second Premier of Alberta</a> from 1910 to 1917 and a minister in the <a href="#">Government of Canada thereafter</a>. When Alberta was created out of a portion of the Northwest Territories in 1905, Sifton became its first chief justice. In 1910 the Alberta government of Premier Alexander Cameron Rutherford was embroiled in the Alberta and Great Waterways Railway scandal; Rutherford resigned, and the position was offered to Sifton. As premier, he failed to gain provincial control over natural resources, but succeeded in implementing some direct democracy measures, leading to prohibition and the extension of the vote to women. During the conscription crisis of 1917, Sifton supported the Conservative Prime Minister, Robert Borden, in his attempt to impose conscription to help win the First World War. He backed the creation of a Union government composed of Conservatives and pro-conscription Liberals. In 1917 he left provincial politics and became a minister in this government. Over the next three and a half years he served briefly in four ministries and was a delegate to the <a href="#">Paris Peace Conference of 1919</a>. (<a href="article?Arthur_Sifton"><strong>Full article...</strong></a>)</p>
                                                         <p>
                                                             <ul class="article-sub-links">
                                                                 Recently featured:
@@ -173,7 +173,7 @@
                                                         </ul>
                                                         <ul class="article-sub-links">                               
                                                             <li><a href="#"><strong>Recently improved articles</strong></a></li>
-                                                            <li>&#8226; <a href="article.html"><strong>Start a new article</strong></a></li>
+                                                            <li>&#8226; <a href="article"><strong>Start a new article</strong></a></li>
                                                             <li>&#8226; <a href="#"><strong>Nominate an article</strong></a></li>                               
                                                         </ul>
                                                     </article>
@@ -265,18 +265,18 @@
             </div>
         </div>
         <footer id="footerPolicy" class="policy">
-            <p>Text is available under the <a href="index.html">Creative Commons Attribution-ShareAlike License</a>; additional terms may apply. By using this site, you agree to the <a href="index.html">Terms of Use</a> and <a href="index.html">Privacy Policy</a>. Wikipedia® is a registered trademark of the <a href="index.html">Wikimedia Foundation, Inc.</a>, a non-profit organization.</p>
+            <p>Text is available under the <a href="/">Creative Commons Attribution-ShareAlike License</a>; additional terms may apply. By using this site, you agree to the <a href="/">Terms of Use</a> and <a href="/">Privacy Policy</a>. Wikipedia® is a registered trademark of the <a href="/">Wikimedia Foundation, Inc.</a>, a non-profit organization.</p>
             <ul class="footer-links">
-                <li><a href="index.html">Privacy policy</a></li>
-                <li><a href="index.html">About Wikipedia</a></li>
-                <li><a href="index.html">Disclaimers</a></li>
-                <li><a href="index.html">Contact Wikipedia</a></li>
-                <li><a href="index.html">Developers</a></li>
-                <li><a href="index.html">Mobile view</a></li>
+                <li><a href="/">Privacy policy</a></li>
+                <li><a href="/">About Wikipedia</a></li>
+                <li><a href="/">Disclaimers</a></li>
+                <li><a href="/">Contact Wikipedia</a></li>
+                <li><a href="/">Developers</a></li>
+                <li><a href="/">Mobile view</a></li>
             </ul>
             <ul class="footer-icons">
-                <li><a href="index.html"><img src="img/wikimedia-button.png"></a></li>
-                <li><a href="index.html"><img src="img/poweredby_mediawiki_88x31.png"></a></li>
+                <li><a href="/"><img src="img/wikimedia-button.png"></a></li>
+                <li><a href="/"><img src="img/poweredby_mediawiki_88x31.png"></a></li>
             </ul>
         </footer>
 

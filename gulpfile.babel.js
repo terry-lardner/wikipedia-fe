@@ -29,6 +29,13 @@ gulp.task('html', () => {
 		'js': `js/${js_min_filename}`
 	}))
     .pipe(gulp.dest('dist'));
+
+    gulp.src('*/*.html', {base: './'})
+	.pipe(htmlreplace({
+		'css': `../css/${css_min_filename}`,
+		'js': `../js/${js_min_filename}`
+	}))
+    .pipe(gulp.dest('dist'));
 });
 
 //CSS task

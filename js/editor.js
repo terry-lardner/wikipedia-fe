@@ -234,7 +234,7 @@
 	function convertToHtml(html) {
 		html = html.replace(/\n<image\>\n/g, '<div class="image">')
 			.replace(/\n<\/image>\n/g, '</div>')
-			.replace(/<img src="+/g, '<img src="img/wiki-img/')
+			.replace(/<img src="+/g, '<img src="../img/wiki-img/')
 			.replace(/<b>+/g, '<strong>')
 			.replace(/<\/b>+/g, '</strong>')
 			.replace(/<i>+/g, '<em>')
@@ -254,7 +254,7 @@
 		content = content.replace(/<br>+/g, '\n')
 				.replace(/<div class="image">+/g, '\n<image>\n')		
 				.replace(/<\/div>+/g, '\n</image>\n')
-				.replace(/<img src="img\/wiki-img\/+/g, '<img src="')
+				.replace(/<img src="..\/img\/wiki-img\/+/g, '<img src="')
 				.replace(/<strong>+/g, '<b>')
 				.replace(/<\/strong>+/g, '</b>')
 				.replace(/<em>+/g, '<i>')
