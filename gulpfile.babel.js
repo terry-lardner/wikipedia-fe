@@ -116,7 +116,7 @@ gulp.task('serve:dist', () => {
 		'dist/img/*.*'
 	]).on('change', reload);
 
-	gulp.watch('*.html', ['html']);
+	gulp.watch(['*.html', '*/*.html'], ['html']);
 	gulp.watch('js/*.js', ['js']);
 	gulp.watch('css/*.css', ['css']);
 	gulp.watch('img/*.*', ['images']);
