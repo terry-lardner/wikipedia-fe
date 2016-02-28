@@ -375,7 +375,7 @@
 		
 		$.ajax({
 			type: 'GET',
-			url: `${location.protocol}//${location.hostname}:5000/testArticle0.html`,
+			url: `${location.protocol}//${location.hostname}/testArticle0.html`,
 			success: function(data) {
 				if (data) {
 					$contentViewport.html(data);					
@@ -391,7 +391,7 @@
 
 		$.ajax({
 			type: 'GET',
-			url: `${location.protocol}//${location.hostname}:5000/testFeature.html`,
+			url: `${location.protocol}//${location.hostname}/testFeature.html`,
 			success: function(data) {
 				if (data) {	  	
 					$inputContentFeat.val(data);
