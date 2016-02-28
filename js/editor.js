@@ -372,10 +372,17 @@
 	});
 
 	function useTestData() {
+		let testUrl;
+
+		if (location.protocol.indexOf('rawgit') > -1) {
+			testUrl = 'https://rawgit.com/terry-lardner/wikipedia-fe/master';
+		} else {
+			testUrl = `${location.protocol}//${location.hostname}:5000`;
+		}
 		
 		$.ajax({
 			type: 'GET',
-			url: `${location.protocol}//${location.hostname}/testArticle0.html`,
+			url: `${testUrl}/testArticle0.html`,
 			success: function(data) {
 				if (data) {
 					$contentViewport.html(data);					
@@ -391,7 +398,7 @@
 
 		$.ajax({
 			type: 'GET',
-			url: `${location.protocol}//${location.hostname}/testFeature.html`,
+			url: `${testUrl}/testFeature.html`,
 			success: function(data) {
 				if (data) {	  	
 					$inputContentFeat.val(data);
@@ -408,26 +415,6 @@
 		$inputArticleTitle.prop('disabled', true);
 		$inputImageUrl.val('Arthur_Lewis_Watkins_Sifton.jpg');
 		$inputfeatured.prop('checked', true);
-		
-		/*
-		let clientContent = new XMLHttpRequest();
-		clientContent.open('GET', './../testArticle.html');
-		clientContent.onreadystatechange = function() {
-			let testContent = convertToHtml(clientContent.responseText);
-			console.log(testContent);
-		 	$contentViewport.html(testContent);
-		}
-		clientContent.send();
-
-		let clientContentFeat = new XMLHttpRequest();
-		clientContentFeat.open('GET', './../testFeature.html');
-		clientContentFeat.onreadystatechange = function() {
-			$inputContentFeat.val(clientContentFeat.responseText);
-		}
-		clientContentFeat.send();
-*/
-		
-
 	}
 
 	//Input test data
