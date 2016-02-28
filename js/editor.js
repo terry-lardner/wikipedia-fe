@@ -32,6 +32,7 @@
 	errorMsg,
 	isNewArticle = 1;
 
+
 	/*
 		=========================
 			ERROR CODES
@@ -245,7 +246,6 @@
 			.replace(/<\/ol>\n/g, '</ol>')
 			.replace(/<\/li>\n<li>+/g, '</li><li>')
 			.replace(/\n/g, '<br>');
-		console.log('[View mode] Converted to HTML.');
 		return html;
 	}
 
@@ -265,7 +265,6 @@
 				.replace(/<\/ol>+/g, '</ol>\n')
 				.replace(/<\/li><li>+/g, '</li>\n<li>');
 
-		console.log('[Edit mode] Converted to What-You-See.');
 		return content;
 	}
 
@@ -302,8 +301,9 @@
 			}
 
 		} else {
+			useTestData();
 			$networkStatus.addClass('networkStatusNOK');
-			$networkStatus.html('*OFFLINE MODE*');
+			$networkStatus.html('*OFFLINE MODE* - Persistence is DISABLED.');
 		}
 
 		//Prevent initial flash of the entire input form before js has a chance to evaluate
@@ -370,6 +370,65 @@
 		hideElements([$btnTestData, $inputContainer]);
 		showElements([$contentViewport]);
 	});
+
+	function useTestData() {
+		
+		$.ajax({
+			type: 'GET',
+			url: `${location.protocol}//${location.hostname}:5000/testArticle0.html`,
+			success: function(data) {
+				if (data) {
+					$contentViewport.html(data);					
+				}
+					
+				evalContentViewport();
+			},
+			error: function(err) {
+				errorMsg = JSON.stringify(err);
+		    	processFormError(3, errorMsg);
+			}
+		});
+
+		$.ajax({
+			type: 'GET',
+			url: `${location.protocol}//${location.hostname}:5000/testFeature.html`,
+			success: function(data) {
+				if (data) {	  	
+					$inputContentFeat.val(data);
+				}
+			},
+			error: function(err) {
+				errorMsg = JSON.stringify(err);
+		    	processFormError(3, errorMsg);
+			}
+		});
+
+
+		$inputArticleTitle.val('Arthur Sifton');
+		$inputArticleTitle.prop('disabled', true);
+		$inputImageUrl.val('Arthur_Lewis_Watkins_Sifton.jpg');
+		$inputfeatured.prop('checked', true);
+		
+		/*
+		let clientContent = new XMLHttpRequest();
+		clientContent.open('GET', './../testArticle.html');
+		clientContent.onreadystatechange = function() {
+			let testContent = convertToHtml(clientContent.responseText);
+			console.log(testContent);
+		 	$contentViewport.html(testContent);
+		}
+		clientContent.send();
+
+		let clientContentFeat = new XMLHttpRequest();
+		clientContentFeat.open('GET', './../testFeature.html');
+		clientContentFeat.onreadystatechange = function() {
+			$inputContentFeat.val(clientContentFeat.responseText);
+		}
+		clientContentFeat.send();
+*/
+		
+
+	}
 
 	//Input test data
 	$btnTestData.on('click', () => {
