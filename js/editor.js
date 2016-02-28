@@ -374,7 +374,7 @@
 	function useTestData() {
 		let testUrl;
 
-		if (location.protocol.indexOf('rawgit') > -1) {
+		if (location.hostname.indexOf('rawgit') > -1) {
 			testUrl = 'https://rawgit.com/terry-lardner/wikipedia-fe/master';
 		} else {
 			testUrl = `${location.protocol}//${location.hostname}:5000`;
