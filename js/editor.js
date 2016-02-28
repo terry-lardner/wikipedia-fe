@@ -377,14 +377,14 @@
 		$inputImageUrl.val('Arthur_Lewis_Watkins_Sifton.jpg');
 
 		let clientContent = new XMLHttpRequest();
-		clientContent.open('GET', './testArticle.html');
+		clientContent.open('GET', './../testArticle.html');
 		clientContent.onreadystatechange = function() {
 		  $inputContent.val(clientContent.responseText);
 		}
 		clientContent.send();
 
 		let clientContentFeat = new XMLHttpRequest();
-		clientContentFeat.open('GET', './testFeature.html');
+		clientContentFeat.open('GET', './../testFeature.html');
 		clientContentFeat.onreadystatechange = function() {
 		  $inputContentFeat.val(clientContentFeat.responseText);
 		}
