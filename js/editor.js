@@ -379,6 +379,8 @@
 		} else {
 			testUrl = `${location.protocol}//${location.hostname}:5000`;
 		}
+
+		console.log(`[TEST] Using : ${testUrl}`);
 		
 		$.ajax({
 			type: 'GET',
